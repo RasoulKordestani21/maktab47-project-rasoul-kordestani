@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { LogoArea } from "../../components/terminal";
 import { ManagerNavItem } from "../../components/terminal";
+import Button from "@material-ui/core/Button";
 export class Header extends Component {
   render() {
     return (
@@ -16,6 +17,9 @@ export class Header extends Component {
       >
         <LogoArea />
         <ManagerNavItem />
+        <Button variant="contained" color="primary">
+          Hello World
+        </Button>
       </div>
     );
   }
