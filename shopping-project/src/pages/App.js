@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Header, Section } from "../layouts/terminal";
+import { Header } from "../layouts/terminal";
 export class App extends Component {
   render() {
     return (
