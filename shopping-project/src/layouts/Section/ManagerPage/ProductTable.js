@@ -11,6 +11,7 @@ import logo from "../../../assets/images/MrShopLogo.jpg";
 import { getUser } from "../../../axios/Axios";
 import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
+import Box from '@material-ui/core/Box'
 
 
 // import { getUser } from '../axios/Axios'
@@ -61,7 +62,7 @@ export default function CustomizedTables() {
 
     return (
       <>
-        <TableContainer style={{ width: "80%", margin: "auto" }} component={Paper}>
+        <TableContainer style={{width: "80%", margin: "auto" ,minHeight:"400px"}} component={Paper}>
           <Table className={classes.table} aria-label="customized table">
             <TableHead>
               <TableRow>
@@ -76,14 +77,14 @@ export default function CustomizedTables() {
                 {state.map(fetchedData => console.log(fetchedData))}
               </>
               {state.map(data => (
-                <StyledTableRow key={data.id}>
+                <StyledTableRow  key={data.id}>
                   <StyledTableCell component="th" scope="row" align="right">
-                    <img src={data.avatar} width="80px" style={{ borderRadius: "50%" }} />
+                    <img src={data.avatar} width="40px" style={{ borderRadius: "50%" }} />
                   </StyledTableCell>
                   <StyledTableCell align="right">{data.id}</StyledTableCell>
-                  <StyledTableCell align="right">{data.name}</StyledTableCell>
-                  <StyledTableCell align="right">{'ویرایش /حذف'}</StyledTableCell>
-                  <StyledTableCell align="right">{''}</StyledTableCell>
+                  <StyledTableCell  align="right">{data.name}</StyledTableCell>
+                  <StyledTableCell  align="right">{'ویرایش /حذف'}</StyledTableCell>
+                  {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
                 </StyledTableRow>
               ))}
             </TableBody>
