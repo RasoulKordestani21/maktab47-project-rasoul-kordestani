@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -8,6 +8,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import logo from "../../../assets/images/MrShopLogo.jpg";
+import { getUser } from "../../../axios/Axios";
+// import { getUser } from '../axios/Axios'
+
+
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -31,7 +35,7 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
+let rows = [
   createData(
     "",
     "لوبیا قرمز گلستان 900 گرمی",
@@ -58,17 +62,26 @@ const rows = [
   ),
 ];
 
+
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
   },
 });
-
+let counter = 0;
 export default function CustomizedTables() {
   const classes = useStyles();
+  const [state, setState] = useState([])
+  useEffect(() => {
+      getUser().then(
+          res => setState(res.data)
+      )
+  },[])
+   
+
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer style={{width:"80%",margin:"auto"}}  component={Paper}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
@@ -79,15 +92,18 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <StyledTableRow key={row.name}>
+          <>
+            {state.map(fetchedData => console.log(fetchedData))}
+          </>
+          {state.map(data => (
+            <StyledTableRow key={data.id}>
               <StyledTableCell component="th" scope="row" align="right">
-                <img src={logo} width="100px" />
+                <img src={data.image} width="80px" style={{borderRadius:"50%"}}/>
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="right">{data.id}</StyledTableCell>
+              <StyledTableCell align="right">{data.title}</StyledTableCell>
+              <StyledTableCell align="right">{'ویرایش /حذف'}</StyledTableCell>
+              <StyledTableCell align="right">{''}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
