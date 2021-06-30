@@ -7,7 +7,7 @@ export class Section extends Component {
       <div>
         <h1>مدیریت موجودی ها و قیمت ها</h1>
         <Button variant="contained" color="primary">
-          افزودن کالا
+          ذخیره
         </Button>
         <Table />
       </div>
