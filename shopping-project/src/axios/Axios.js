@@ -1,10 +1,11 @@
 
 import axios from 'axios';
 
-export const getUser = async () => {
+export const getUser = async (a=3,b=5) => {
   let response;
   try {
-    response = await axios.get('https://fakestoreapi.com/products?limit=5');
+    const one = 1;
+    response = await axios.get(`http://localhost:3000/prodManTable?_start=${a}&_limit=${b}`);
     // console.log(response);
     
   } catch (error) {
