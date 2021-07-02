@@ -5,7 +5,7 @@ export class LogoArea extends Component {
     return (
       <div style={{ display: "flex", direction: "rtl" }}>
         <img src={logo} width="100px" />
-        <h1>مستر شاپ</h1>
+        <h1>فروشگاه مستر شاپ</h1>
       </div>
     );
   }

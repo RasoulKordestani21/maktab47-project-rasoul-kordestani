@@ -32,12 +32,10 @@ export class App extends Component {
      
       <ThemeProvider theme={theme}>
         <BrowserRouter >
-
-
-          <Header />
-          <Section />
+          {/* <Section /> */}
           <Switch>
-            <Route exact path="/salam">
+            <Route exact path="/">
+              <Header />
               <h1>homePage</h1>
             </Route>
             <Route exact path="/CustomTable">

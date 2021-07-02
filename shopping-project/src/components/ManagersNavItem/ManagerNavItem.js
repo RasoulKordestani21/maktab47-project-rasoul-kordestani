@@ -12,17 +12,15 @@ export function ManagerNavItem() {
   function customPage() {
     history.push('/CustomTable')
   }
-  function firstPage() {
-    history.push('/')
-  }
+
   return (
-    <div>
+    <div style={{  display: "flex",backgroundColor: 'rgb(255,200,3)'}}>
       <div>
-        <Button color="purpule" type="button" onClick={productPage}> مدیریت کالاها</Button>
+        <Button type="button" onClick={productPage}> مدیریت کالاها</Button>
         <Button type="button" onClick={StockPricePage}> مدیریت موجودی ها </Button>
         <Button type="button" onClick={customPage}> مدیریت سفارش ها</Button>
-      <Button type="button" onClick={firstPage}>بازگشت به صفحه اصلی</Button>
       </div>
+     
     </div>
   );
 
