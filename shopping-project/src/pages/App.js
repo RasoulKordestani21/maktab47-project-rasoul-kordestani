@@ -5,17 +5,32 @@ import { CustomPage } from '../pages/Manager/CustomPage';
 import { ProductPage } from '../pages/Manager/ProductPage';
 import { StockPricePage } from '../pages/Manager/StockPricePage';
 import '../assets/style/style.css'
+// import { typography } from "@material-ui/system";
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
 
-
-
-
-
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+  },
+});
 
 export class App extends Component {
   render() {
     return (
      
-
+      <ThemeProvider theme={theme}>
         <BrowserRouter >
 
 
@@ -36,6 +51,7 @@ export class App extends Component {
             </Route>
           </Switch>
         </BrowserRouter>
+        </ThemeProvider>
     
     );
   }
