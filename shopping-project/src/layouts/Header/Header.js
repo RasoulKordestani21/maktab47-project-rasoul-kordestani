@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { LogoArea } from "../../components/terminal";
-import { ManagerNavItem } from "../../components/terminal";
+import {ManagerNavItem} from "../../components/ManagersNavItem/ManagerNavItem";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import "../../assets/styles/style.css";
@@ -12,6 +12,7 @@ export class Header extends Component {
         <Grid container direction="row" justify="space-between">
           <LogoArea />
           <ManagerNavItem />
+
         </Grid>
       </header>
     );

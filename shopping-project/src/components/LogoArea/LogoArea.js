@@ -11,4 +11,4 @@ export class LogoArea extends Component {
   }
 }
 
-export default LogoArea;
+
