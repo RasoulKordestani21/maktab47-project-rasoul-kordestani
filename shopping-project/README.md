@@ -71,4 +71,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### this line added to migrate from master to develop branch
 
+<<<<<<< HEAD
 now it's time to create my first release after phase 1 tasks .
+=======
+change readme to commit after merging
+change readme to commit after adding SectionFeature
+>>>>>>> develop
