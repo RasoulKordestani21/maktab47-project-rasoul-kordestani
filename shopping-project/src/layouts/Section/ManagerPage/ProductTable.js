@@ -42,7 +42,7 @@ const useStyles = makeStyles({
   },
 });
 let counter = 0;
-export default function CustomizedTables() {
+export default function ProductTable() {
   const classes = useStyles();
   const [state, setState] = useState([])
   const [beginItem, setBeginItem] = useState(1);
@@ -51,55 +51,55 @@ export default function CustomizedTables() {
     setPage(value);
   };
 
-    useEffect(() => {
-      console.log(beginItem)
-      getUser((page-1)*5+1, 5).then(
-        res => setState(res.data)
-      )
-    }, [page])
+  useEffect(() => {
+    console.log(beginItem)
+    getUser((page - 1) * 5 + 1, 5).then(
+      res => setState(res.data)
+    )
+  }, [page])
 
 
 
-    return (
-      <>
-        <TableContainer style={{width: "80%", margin: "auto" ,minHeight:"400px"}} component={Paper}>
-          <Table className={classes.table} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell align="right">تصویر</StyledTableCell>
-                <StyledTableCell align="right">نام کالا</StyledTableCell>
-                <StyledTableCell align="right">دسته بندی</StyledTableCell>
-                <StyledTableCell align="right">ویرایش /حذف</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <>
-                {state.map(fetchedData => console.log(fetchedData))}
-              </>
-              {state.map(data => (
-                <StyledTableRow  key={data.id}>
-                  <StyledTableCell component="th" scope="row" align="right">
-                    <img src={data.avatar} width="40px" style={{ borderRadius: "50%" }} />
-                  </StyledTableCell>
-                  <StyledTableCell align="right">{data.id}</StyledTableCell>
-                  <StyledTableCell  align="right">{data.name}</StyledTableCell>
-                  <StyledTableCell  align="right">{'ویرایش /حذف'}</StyledTableCell>
-                  {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div style={{ width: "50%", margin: "auto", padding: '20px' }}>
-          {/* <button onClick={(e) => { setBeginItem(1); console.log(beginItem) }}>page1</button>
+  return (
+    <>
+      <TableContainer style={{ width: "80%", margin: "auto", minHeight: "400px" }} component={Paper}>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell align="right">تصویر</StyledTableCell>
+              <StyledTableCell align="right">نام کالا</StyledTableCell>
+              <StyledTableCell align="right">دسته بندی</StyledTableCell>
+              <StyledTableCell align="right">ویرایش /حذف</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <>
+              {state.map(fetchedData => console.log(fetchedData))}
+            </>
+            {state.map(data => (
+              <StyledTableRow key={data.id}>
+                <StyledTableCell component="th" scope="row" align="right">
+                  <img src={data.avatar} width="40px" style={{ borderRadius: "50%" }} />
+                </StyledTableCell>
+                <StyledTableCell align="right">{data.id}</StyledTableCell>
+                <StyledTableCell align="right">{data.name}</StyledTableCell>
+                <StyledTableCell align="right">{'ویرایش /حذف'}</StyledTableCell>
+                {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <div style={{ width: "50%", margin: "auto", padding: '20px' }}>
+        {/* <button onClick={(e) => { setBeginItem(1); console.log(beginItem) }}>page1</button>
           <button onClick={(e) => { setBeginItem(6); console.log(beginItem) }}>page2</button>
           <button onClick={(e) => { setBeginItem(11); console.log(beginItem) }}>page3</button>
           <button onClick={(e) => { setBeginItem(16); console.log(beginItem) }}>page4</button> */}
-          <div style={{direction:"ltr"}}>
-            {/* <Typography >Page: {page}</Typography> */}
-            <Pagination count={4} color="primary" page={page} onChange={handleChange} />
-          </div>
+        <div style={{ direction: "ltr" }}>
+          {/* <Typography >Page: {page}</Typography> */}
+          <Pagination count={4} color="primary" page={page} onChange={handleChange} />
         </div>
-      </>
-    );
-  }
+      </div>
+    </>
+  );
+}
