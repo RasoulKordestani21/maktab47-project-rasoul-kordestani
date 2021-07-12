@@ -79,7 +79,7 @@ export default function StockPriceTable() {
                 <StyledTableRow  key={data.id}>
                   <StyledTableCell align="right">{data.id}</StyledTableCell>
                   <StyledTableCell  align="right">{data.name}</StyledTableCell>
-                  <StyledTableCell  align="right">{data.email}</StyledTableCell>
+                  <StyledTableCell  align="right">{data.numbers}</StyledTableCell>
                   {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
                 </StyledTableRow>
               ))}
