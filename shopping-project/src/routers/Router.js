@@ -7,13 +7,16 @@ import { CustomPage } from '../pages/Manager/CustomPage';
 import { ProductPage } from '../pages/Manager/ProductPage';
 import { StockPricePage } from "../pages/Manager/StockPricePage"
 
+import FirstPage from "../pages/Main/FirstPage";
+import ProductDetail from "../pages/Main/ProductDetail";
+import PurchaseBasket from "../pages/Main/PurchaseBasket";
+import FinalizePurchase from "../pages/Main/FinalizePurchase";
+
 export default function Router() {
     return (
         < BrowserRouter>
             <div>
                
-
-                <hr />
 
                 {/*
             A <Switch> looks through all its children <Route>
@@ -23,6 +26,20 @@ export default function Router() {
             of them to render at a time
           */}
                 <Switch>
+                    <Route exact path="/">
+                        <FirstPage />
+                    </Route>
+                    <Route exact path="/ProductDetail">
+                        <ProductDetail />
+                    </Route>
+                    <Route exact path="/PurchaseBasket">
+                        <PurchaseBasket />
+                    </Route>
+                    <Route exact path="/FinalizePurchase">
+                        <FinalizePurchase />
+                    </Route>
+                    
+
                     <Route exact path="/CustomTable">
                         <CustomPage />
                     </Route>
