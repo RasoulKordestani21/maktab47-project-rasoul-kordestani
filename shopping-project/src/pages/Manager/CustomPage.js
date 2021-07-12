@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "@material-ui/core";
-import CustomTable from "../../layouts/Section/ManagerPage/CustomTable";
-import Header from '../../layouts/Header/Header'
+import CustomTable from "../../layouts/Section/ManagerSection/CustomTable";
+import {ManagerHeader} from '../../layouts/Header/ManagerHeader'
 
 
 
@@ -10,7 +10,7 @@ export class CustomPage extends Component {
     render() {
         return (
             <div >
-                <Header />
+                <ManagerHeader />
                 <div>
                     <h1>مدیریت سفارش ها</h1>
                     <span>سفارش های تحویل داده شده</span>

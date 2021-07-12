@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Button } from "@material-ui/core";
-import StockPriceTable from "../../layouts/Section/ManagerPage/StockPriceTable";
-import { Header } from "../../layouts/Header/Header";
+import StockPriceTable from "../../layouts/Section/ManagerSection/StockPriceTable";
+import {ManagerHeader} from "../../layouts/Header/ManagerHeader";
 export class StockPricePage extends Component {
     render() {
         return (
             <div>
-                <Header />
+                <ManagerHeader />
             <div>
             <div style={{ display: "flex", justifyContent:"space-between"}}>
                         <h1>مدیریت موجودی ها وقیمت ها</h1>
