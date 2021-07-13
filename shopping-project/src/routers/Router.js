@@ -11,6 +11,9 @@ import FirstPage from "../pages/Main/FirstPage";
 import ProductDetail from "../pages/Main/ProductDetail";
 import PurchaseBasket from "../pages/Main/PurchaseBasket";
 import FinalizePurchase from "../pages/Main/FinalizePurchase";
+import CanceledPay from '../pages/Main/CanceledPay';
+import SuccessPay from '../pages/Main/SuccessPay'
+
 
 export default function Router() {
     return (
@@ -37,6 +40,12 @@ export default function Router() {
                     </Route>
                     <Route exact path="/FinalizePurchase">
                         <FinalizePurchase />
+                    </Route>
+                    <Route exact path="/CanceledPay">
+                        <CanceledPay />
+                    </Route>
+                    <Route exact path="/SuccessPay">
+                        <SuccessPay />
                     </Route>
                     
 
