@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import ProductDetailCard from '../../../components/ProductDetailCard/ProductDetailCard'
 import { getProductDetail } from '../../../axios/Axios'
-import { connect } from 'react-redux'
-import  store  from '../../../redux/store'
+import { connect } from 'react-redux';
+
 class ProductDetailSection extends Component {
     state = {
         group: '',
