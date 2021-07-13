@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import { TextField } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { connect } from 'react-redux';
-import { addProduct } from '../../redux/Actions/choosenProductAction';
+import { addProduct,deleteProduct } from '../../redux/Actions/choosenProductAction';
 // import Button from '@material-ui/core'
 class ProductDetailCard extends Component {
     async componentDidMount() {
@@ -40,12 +40,15 @@ class ProductDetailCard extends Component {
                         <Button  onClick={()=>this.props.addProduct(this.props.productDetail)} style={{ marginRight: "30px", backgroundColor: "green" }}>افزودن کالا به سبد خرید
                             <AddCircleIcon />
                         </Button>
+                        <Button onClick={()=>this.props.deleteProduct(this.props.productDetail)}>حذف کالا</Button>
                     </Grid>
                 </Grid>
                 <Grid justify="center" container style={{ backgroundColor: 'aqua', width: '80%', margin: '20px auto' }}>
                     {this.props.productDetail.description}
                 </Grid>
+       
             </Grid>
+        
         )
     }
 }
@@ -59,7 +62,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     console.log(dispatch)
     return {
-        addProduct: (choosenProduct) => { dispatch(addProduct(choosenProduct)) }
+        addProduct: (choosenProduct) => { dispatch(addProduct(choosenProduct)) },
+        deleteProduct: (choosenProduct) => { dispatch(deleteProduct(choosenProduct)) }
     }
 }
 
