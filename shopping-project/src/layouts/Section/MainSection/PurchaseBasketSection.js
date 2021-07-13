@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,6 +8,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from "@material-ui/core/Button";
+
+import { connect } from 'react-redux';
+import { deleteProduct } from '../../../redux/Actions/choosenProductAction';
+
+import { useHistory } from "react-router-dom";
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -28,24 +33,31 @@ const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-
 const useStyles = makeStyles({
     table: {
         minWidth: 700,
     },
 });
 
-let ele =      <StyledTableRow  >
-<StyledTableCell  align="right">برنج ایکس</StyledTableCell>
-    <StyledTableCell  align="right">۲۲۰۰۰۰</StyledTableCell>
-    <StyledTableCell  align="right">۱ عدد</StyledTableCell>
-          <StyledTableCell align="right" style={{color:"blue",textDecoration:"underline"}}> حذف</StyledTableCell>
-</StyledTableRow>
-let arr = [];
-for (let i = 0; i < 5; i++){
-    arr[i] = ele
+function calcWholePrice(priceNumbers) {
+    let wholePrice = 0;
+    for (let i = 0; i < priceNumbers.length; i++) {
+        wholePrice = wholePrice + eval(priceNumbers[i][0]) * priceNumbers[i][1]
+    }
+    console.log(wholePrice);
+    return wholePrice;
 }
-export default function PurchaseBasketSection()  {
+
+
+
+function PurchaseBasketSection(props) {
+    console.log(props.choosenProduct.choosenProducts);
+    let history = useHistory();
+
+    function goToFinalizePurchase() {
+
+        history.push('/FinalizePurchase')
+    }
     const classes = useStyles();
 
     return (
@@ -62,17 +74,43 @@ export default function PurchaseBasketSection()  {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-               {arr}
-               
-             
+
+                        {props.choosenProduct.choosenProducts.map(ele =>
+                            <StyledTableRow  >
+                                <StyledTableCell align="right">{ele.name}</StyledTableCell>
+                                <StyledTableCell align="right">{ele.price}</StyledTableCell>
+                                <StyledTableCell align="right">{ele.numOfPurch}</StyledTableCell>
+                                <StyledTableCell align="right" style={{ color: "blue", textDecoration: "underline" }} onClick={() => props.deleteProduct(ele)}> حذف</StyledTableCell>
+                            </StyledTableRow>
+
+                        )}
+
+
                     </TableBody>
                 </Table>
             </TableContainer>
             <div>
-                <div>جمع : ۲۲۰۰۰۰۰</div>
-                <Button>نهایی کردن خرید</Button>
+                <div>{
+                    calcWholePrice(props.choosenProduct.choosenProducts.map(ele => [ele.price, ele.numOfPurch]))
+                }</div>
+                <Button onClick={()=>goToFinalizePurchase()}>نهایی کردن خرید</Button>
             </div>
+            <button onClick={() => { }}>click</button>
         </div>
     )
 
 }
+
+const mapStateToProps = state => {
+    console.log(state.choosenProductReducer)
+    return {
+        choosenProduct: state.choosenProductReducer
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        deleteProduct: (choosenProduct) => { dispatch(deleteProduct(choosenProduct)) }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(PurchaseBasketSection)
