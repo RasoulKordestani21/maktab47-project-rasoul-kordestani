@@ -6,22 +6,33 @@ const initialState = {
 
 
 const choosenProductReducer = (state = initialState, action) => {
-    console.log(action.choosenProduct);
-    state.choosenProducts.push(action.choosenProduct);
-    console.log(state.choosenProducts)
     switch (action.type) {
         case ADD_PRODUCT: {
+            let isInList = false;
+            state.choosenProducts.forEach(ele => {
+                if (ele.name == action.choosenProduct.name) {
+                    isInList = true;
+                    ele.numOfPurch++;
+                }
+            })
+            if (!isInList) {
+                action.choosenProduct.numOfPurch = 1;
+                state.choosenProducts.push(action.choosenProduct);
+            }
+            console.log(state.choosenProducts)
             return {
-                ...state.choosenProducts
+                ...state
             }
         }
         case DELETE_PRODUCT: {
             let id = action.choosenProduct.id;
             let name = action.choosenProduct.name;
-            let index = this.state.choosenProducts.findIndex(ele => ele.id == id && ele.name == name);
-            this.state.choosenProducts.splice(index, 1);
+            let index = state.choosenProducts.findIndex(ele => ele.id == id && ele.name == name);
+            console.log(id,name,index);
+            state.choosenProducts.splice(index, 1);
+            console.log(state.choosenProducts);
             return {
-                choosenProducts: this.state.choosenProducts,
+                choosenProducts: state.choosenProducts,
             }
         }
         default: return {
