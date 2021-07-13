@@ -13,6 +13,9 @@ export function MainHeader() {
   function firstPage() {
     history.push('/')
   }
+  function PurchaseBasket() {
+    history.push('/PurchaseBasket')
+  }
 
   return (
     <header >
@@ -21,7 +24,7 @@ export function MainHeader() {
         
         <div>
           <Button type="button" onClick={firstPage}>مدیریت</Button>
-          <Button type="button" onClick={firstPage}> <ShoppingCartIcon />سبد خرید</Button>
+          <Button type="button" onClick={PurchaseBasket}> <ShoppingCartIcon />سبد خرید</Button>
         </div>
       </Grid>
     </header>
