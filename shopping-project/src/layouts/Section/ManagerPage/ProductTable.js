@@ -79,7 +79,7 @@ export default function ProductTable() {
             {state.map(data => (
               <StyledTableRow key={data.id}>
                 <StyledTableCell component="th" scope="row" align="right">
-                  <img src={data.avatar} width="40px" style={{ borderRadius: "50%" }} />
+                  <img src={data.image} width="40px" style={{ borderRadius: "50%" }} />
                 </StyledTableCell>
                 <StyledTableCell align="right">{data.id}</StyledTableCell>
                 <StyledTableCell align="right">{data.name}</StyledTableCell>

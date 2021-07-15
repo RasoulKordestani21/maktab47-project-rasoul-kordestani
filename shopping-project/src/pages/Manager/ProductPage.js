@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import ProductTable from "../../layouts/Section/ManagerPage/ProductTable";
-import Header from '../../layouts/Header/Header'
+import ManagerHeader from '../../layouts/Header/ManagerHeader/ManagerHeader'
 import { Button } from "@material-ui/core";
 export class ProductPage extends Component {
     render() {
         return (
             <div>
-                <Header />
+                <ManagerHeader />
                 <div >
                     <div style={{ display: "flex", justifyContent:"space-between"}}>
                         <h1>مدیریت کالاها</h1>
