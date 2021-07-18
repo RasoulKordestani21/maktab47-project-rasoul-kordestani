@@ -47,7 +47,7 @@ const useStyles = makeStyles({
   },
 });
 let counter = 0;
-export default function CustomTable() {
+ function CustomTable() {
   const classes = useStyles();
   const [state, setState] = useState([])
   const [request, setRequest] = useState('')

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Header, Section } from "../layouts/terminal";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { CustomPage } from '../pages/Manager/CustomPage';
-import { ProductPage } from '../pages/Manager/ProductPage';
+import  CustomPage  from '../pages/Manager/CustomPage';
+import  ProductPage  from '../pages/Manager/ProductPage';
 import { StockPricePage } from '../pages/Manager/StockPricePage';
 import '../assets/style/style.css'
 // import { typography } from "@material-ui/system";

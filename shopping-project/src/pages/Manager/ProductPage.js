@@ -18,9 +18,7 @@ class ProductPage extends Component {
                         <h1>مدیریت کالاها</h1>
                         <Button onClick={()=>{this.props.modalFlagAction(true)}} >افزودن کالا</Button>
                     </div>
-                    {/* <Button variant="contained" color="primary">
-          ذخیره
-        </Button> */}
+                    
                     <ProductTable />
 
                 </div>
