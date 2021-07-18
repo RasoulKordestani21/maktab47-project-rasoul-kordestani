@@ -16,6 +16,11 @@ import Box from '@material-ui/core/Box'
 import { connect } from 'react-redux';
 import { request } from "dom-helpers/cjs/animationFrame";
 
+import { modalCustomFlagAction } from '../../../redux/Actions/modalFlagAction'
+
+import { useHistory } from "react-router-dom";
+
+
 // import { getUser } from '../axios/Axios'
 
 
@@ -49,7 +54,7 @@ function CustomTable(props) {
   const classes = useStyles();
   const [state, setState] = useState([])
   const [request, setRequest] = useState('')
-  const [beginItem, setBeginItem] = useState(1);
+  // const [beginItem, setBeginItem] = useState(1);
   const [page, setPage] = React.useState(1);
   const handleChange = (event, value) => {
     console.log(event, value)
@@ -57,28 +62,34 @@ function CustomTable(props) {
   };
 
   useEffect(async () => {
-    console.log(beginItem)
     await getUser((page - 1) * 5 + 1, 5).then(
-      res => { setState(res.data) }
-    )
-    await getUser((page - 1) * 5 + 1, 5).then(
-      res => { setRequest(res.data) }
+      res => { setState(res.data); setRequest(res.data) }
     )
 
+  },[useHistory().location])
 
+  useEffect(async () => {
+    console.log('0')
+    await getUser((page - 1) * 5 + 1, 5).then(
+      res => { setState(res.data); setRequest(res.data) }
+    )
   }, [page])
 
-  useEffect(() => {
-    console.log(request)
+  useEffect(async() => {
+    await getUser((page - 1) * 5 + 1, 5).then(
+      res => { setState(res.data); setRequest(res.data) }
+    )
+   
     if (props.isFiltered) {
-      setState(request.filter(ele => ele.isReceived == props.isReceived))
+      await setState(request.filter(ele => ele.isReceived == props.isReceived))
     }
 
   }, [props])
 
+
   return (
     <>
-      <TableContainer style={{ width: "80%", margin: "auto", minHeight: "400px" }} component={Paper}>
+      <TableContainer style={{ width: "80%", margin: "auto" }} component={Paper}>
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -89,14 +100,15 @@ function CustomTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {console.log(props)}
+
 
             {state.map(data => (
               <StyledTableRow key={data.id}>
                 <StyledTableCell align="right">{data.id}</StyledTableCell>
                 <StyledTableCell align="right">{data.name}</StyledTableCell>
                 <StyledTableCell align="right">{(new Date(data.createdAt)).toLocaleDateString()}</StyledTableCell>
-                <StyledTableCell align="right">{'برسی سفارش'}</StyledTableCell>
+                <StyledTableCell onClick={() => { console.log(props.modalCustomFlagAction(true)) }}
+                  align="right">{'برسی سفارش'}</StyledTableCell>
                 {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
               </StyledTableRow>
             ))}
@@ -117,8 +129,15 @@ const mapStateToProps = state => {
   console.log(state)
   return {
     isFiltered: state.filterCustomTableReducer.isFiltered,
-    isReceived: state.filterCustomTableReducer.isReceived
+    isReceived: state.filterCustomTableReducer.isReceived,
+    state
   }
 }
 
-export default connect(mapStateToProps)(CustomTable);
+const mapDispatchToProps = dispatch => {
+  console.log(dispatch)
+  return {
+    modalCustomFlagAction: (flag) => { dispatch(modalCustomFlagAction(flag)) }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CustomTable);

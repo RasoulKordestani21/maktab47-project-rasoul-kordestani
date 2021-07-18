@@ -2,15 +2,21 @@ import React, { Component } from "react";
 import ProductTable from "../../layouts/Section/ManagerPage/ProductTable";
 import ManagerHeader from '../../layouts/Header/ManagerHeader/ManagerHeader'
 import { Button } from "@material-ui/core";
-export class ProductPage extends Component {
+import ProductModal from '../../components/Modals/ProductModal';
+import { connect } from 'react-redux';
+import {modalFlagAction} from '../../redux/Actions/modalFlagAction'
+
+class ProductPage extends Component {
+  
     render() {
         return (
             <div>
-                <ManagerHeader />
+                <ManagerHeader  />
+                <ProductModal />
                 <div >
                     <div style={{ display: "flex", justifyContent:"space-between"}}>
                         <h1>مدیریت کالاها</h1>
-                        <Button >افزودن کالا</Button>
+                        <Button onClick={()=>{this.props.modalFlagAction(true)}} >افزودن کالا</Button>
                     </div>
                     {/* <Button variant="contained" color="primary">
           ذخیره
@@ -22,3 +28,20 @@ export class ProductPage extends Component {
         );
     }
 }
+
+
+const mapStateToProps = state => {
+    console.log(state)
+    return {
+        productModalFlag: state.productModalFlag,
+        customModalFlag:state.customModalFlag
+    }
+  }
+  const mapDispatchToProps = dispatch => {
+    console.log(dispatch)
+    return {
+        modalFlagAction: (flag) => { dispatch(modalFlagAction(flag)) }
+    }
+  }
+  
+  export default connect(mapStateToProps,mapDispatchToProps)(ProductPage)

@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { Button } from "@material-ui/core";
 import CustomTable from "../../layouts/Section/ManagerPage/CustomTable";
 import ManagerHeader from '../../layouts/Header/ManagerHeader/ManagerHeader'
-import { connect } from 'react-redux';
 import { filterCustomTableAction } from "../../redux/Actions/filterCustomTableAction";
-
-class CustcomPage extends Component {
+import SendCustom from '../../components/Modals/customModals/SentCustomModal';
+import ReceivedCustomModal from '../../components/Modals/customModals/ReceivedCustomModal'
+import { connect } from 'react-redux';
+ class CustomPage extends Component {
     constructor(props) {
         super(props)
     }
@@ -36,6 +37,8 @@ class CustcomPage extends Component {
                             this.props.filterCustomTableAction(this.state)
                         }} />
                     <CustomTable />
+                    <SendCustom />
+                <ReceivedCustomModal />
 
                 </div>
             </div>
@@ -43,18 +46,20 @@ class CustcomPage extends Component {
     }
 }
 
+
 const mapStateToProps = state => {
-    return {
-        isFiltered: state.isFiltered,
-        isReceived: state.isReceived
-    }
+  console.log(state)
+  return {
+    isFiltered: state.filterCustomTableReducer.isFiltered,
+    isReceived: state.filterCustomTableReducer.isReceived,
+    state
+  }
 }
+
 const mapDispatchToProps = dispatch => {
-    console.log(dispatch)
-    return {
-        filterCustomTableAction: (flags) => { dispatch(filterCustomTableAction(flags)) },
-    }
+  console.log(dispatch)
+  return {
+      filterCustomTableAction: (flag) => { dispatch(filterCustomTableAction(flag)) }
+  }
 }
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(CustcomPage);
+export default connect(mapStateToProps,mapDispatchToProps)(CustomPage);
