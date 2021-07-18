@@ -13,10 +13,13 @@ import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
 import Box from '@material-ui/core/Box'
 
+import { connect } from 'react-redux';
+import { request } from "dom-helpers/cjs/animationFrame";
 
 import { modalCustomFlagAction } from '../../../redux/Actions/modalFlagAction'
 
 import { useHistory } from "react-router-dom";
+
 
 
 // import { getUser } from '../axios/Axios'
@@ -46,14 +49,16 @@ const useStyles = makeStyles({
     minWidth: 700,
   },
 });
-let counter = 0;
- function CustomTable() {
+
+
+function CustomTable(props) {
   const classes = useStyles();
   const [state, setState] = useState([])
   const [request, setRequest] = useState('')
   // const [beginItem, setBeginItem] = useState(1);
   const [page, setPage] = React.useState(1);
   const handleChange = (event, value) => {
+    console.log(event, value)
     setPage(value);
   };
 

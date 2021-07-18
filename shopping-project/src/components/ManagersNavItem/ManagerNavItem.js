@@ -14,14 +14,14 @@ export function ManagerNavItem() {
   }
 
   return (
-    <div style={{  display: "flex",backgroundColor: 'rgb(255,200,3)'}}>
+    <div style={{ display: "flex", justifyContent: 'space-between', backgroundColor: 'rgb(255,200,3)' }}>
       <div>
         <Button type="button" onClick={productPage}> مدیریت کالاها</Button>
         <Button type="button" onClick={StockPricePage}> مدیریت موجودی ها </Button>
         <Button type="button" onClick={customPage}> مدیریت سفارش ها</Button>
       </div>
      
-    </div>
+      </div>
   );
 
 }

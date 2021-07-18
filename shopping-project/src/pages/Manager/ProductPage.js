@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ProductTable from "../../layouts/Section/ManagerPage/ProductTable";
-import Header from '../../layouts/Header/Header'
+import ManagerHeader from '../../layouts/Header/ManagerHeader/ManagerHeader'
 import { Button } from "@material-ui/core";
 import ProductModal from '../../components/Modals/ProductModal';
 import { connect } from 'react-redux';
