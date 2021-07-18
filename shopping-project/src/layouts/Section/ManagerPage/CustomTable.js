@@ -14,6 +14,11 @@ import Pagination from '@material-ui/lab/Pagination';
 import Box from '@material-ui/core/Box'
 
 
+import { modalCustomFlagAction } from '../../../redux/Actions/modalFlagAction'
+
+import { useHistory } from "react-router-dom";
+
+
 // import { getUser } from '../axios/Axios'
 
 
@@ -45,60 +50,90 @@ let counter = 0;
 export default function CustomTable() {
   const classes = useStyles();
   const [state, setState] = useState([])
-  const [beginItem, setBeginItem] = useState(1);
+  const [request, setRequest] = useState('')
+  // const [beginItem, setBeginItem] = useState(1);
   const [page, setPage] = React.useState(1);
   const handleChange = (event, value) => {
     setPage(value);
   };
 
-    useEffect(() => {
-      console.log(beginItem)
-      getUser((page-1)*5+1, 5).then(
-        res => setState(res.data)
-      )
-    }, [page])
+  useEffect(async () => {
+    await getUser((page - 1) * 5 + 1, 5).then(
+      res => { setState(res.data); setRequest(res.data) }
+    )
+
+  },[useHistory().location])
+
+  useEffect(async () => {
+    console.log('0')
+    await getUser((page - 1) * 5 + 1, 5).then(
+      res => { setState(res.data); setRequest(res.data) }
+    )
+  }, [page])
+
+  useEffect(async() => {
+    await getUser((page - 1) * 5 + 1, 5).then(
+      res => { setState(res.data); setRequest(res.data) }
+    )
+   
+    if (props.isFiltered) {
+      await setState(request.filter(ele => ele.isReceived == props.isReceived))
+    }
+
+  }, [props])
 
 
+  return (
+    <>
+      <TableContainer style={{ width: "80%", margin: "auto" }} component={Paper}>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell align="right">نام کاربر</StyledTableCell>
+              <StyledTableCell align="right">مجموع مبالغ</StyledTableCell>
+              <StyledTableCell align="right">زمان ثبت سفارش</StyledTableCell>
+              <StyledTableCell align="right"></StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
 
-    return (
-      <>
-        <TableContainer style={{width: "80%", margin: "auto" ,minHeight:"400px"}} component={Paper}>
-          <Table className={classes.table} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell align="right">نام کاربر</StyledTableCell>
-                <StyledTableCell align="right">مجموع مبالغ</StyledTableCell>
-                <StyledTableCell align="right">زمان ثبت سفارش</StyledTableCell>
-                <StyledTableCell align="right"></StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <>
-                {state.map(fetchedData => console.log(fetchedData))}
-              </>
-              {state.map(data => (
-                <StyledTableRow  key={data.id}>
-              
-                  <StyledTableCell align="right">{data.id}</StyledTableCell>
-                      <StyledTableCell align="right">{data.name}</StyledTableCell>
-                      <StyledTableCell  align="right">{data.email}</StyledTableCell>
-                  <StyledTableCell  align="right">{'برسی سفارش'}</StyledTableCell>
-                  {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div style={{ width: "50%", margin: "auto", padding: '20px' }}>
-          {/* <button onClick={(e) => { setBeginItem(1); console.log(beginItem) }}>page1</button>
-          <button onClick={(e) => { setBeginItem(6); console.log(beginItem) }}>page2</button>
-          <button onClick={(e) => { setBeginItem(11); console.log(beginItem) }}>page3</button>
-          <button onClick={(e) => { setBeginItem(16); console.log(beginItem) }}>page4</button> */}
-          <div style={{direction:"ltr"}}>
-            {/* <Typography >Page: {page}</Typography> */}
-            <Pagination count={4} color="primary" page={page} onChange={handleChange} />
-          </div>
+
+            {state.map(data => (
+              <StyledTableRow key={data.id}>
+                <StyledTableCell align="right">{data.id}</StyledTableCell>
+                <StyledTableCell align="right">{data.name}</StyledTableCell>
+                <StyledTableCell align="right">{(new Date(data.createdAt)).toLocaleDateString()}</StyledTableCell>
+                <StyledTableCell onClick={() => { console.log(props.modalCustomFlagAction(true)) }}
+                  align="right">{'برسی سفارش'}</StyledTableCell>
+                {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <div style={{ width: "50%", margin: "auto", padding: '20px' }}>
+
+        <div style={{ direction: "ltr" }}>
+          <Pagination count={4} color="primary" page={page} onChange={handleChange} />
         </div>
-      </>
-    );
+      </div>
+    </>
+  );
+}
+
+const mapStateToProps = state => {
+  console.log(state)
+  return {
+    isFiltered: state.filterCustomTableReducer.isFiltered,
+    isReceived: state.filterCustomTableReducer.isReceived,
+    state
   }
+}
+
+const mapDispatchToProps = dispatch => {
+  console.log(dispatch)
+  return {
+    modalCustomFlagAction: (flag) => { dispatch(modalCustomFlagAction(flag)) }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CustomTable);

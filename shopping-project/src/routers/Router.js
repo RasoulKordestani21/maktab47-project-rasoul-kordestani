@@ -3,10 +3,10 @@ import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
 
 
-import { CustomPage } from '../pages/Manager/CustomPage';
-import { ProductPage } from '../pages/Manager/ProductPage';
-import { StockPricePage } from "../pages/Manager/StockPricePage"
-
+import  CustomPage  from '../pages/Manager/CustomPage';
+import  ProductPage  from '../pages/Manager/ProductPage';
+import { StockPricePage } from "../pages/Manager/StockPricePage";
+import { LoginManagerPage } from '../pages/Manager/LoginManagerPage';
 export default function Router() {
     return (
         < BrowserRouter>
