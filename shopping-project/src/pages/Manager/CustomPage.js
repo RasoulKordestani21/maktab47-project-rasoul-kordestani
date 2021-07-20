@@ -26,19 +26,21 @@ import { connect } from 'react-redux';
                     <h1>مدیریت سفارش ها</h1>
                     <span>سفارش های تحویل داده شده</span>
                     <input type="radio" name="state" value='true'
-                        onChange={(e) => {
-                            this.setState({ isFiltered: true, isReceived: true })
-                            this.props.filterCustomTableAction(this.state)
+                        onChange={async(e) => {
+                            await this.setState({ isFiltered: true, isReceived: true })
+                            await console.log('true state is',this.state)
+                            await this.props.filterCustomTableAction(this.state)
                         }} />
                     <span>سفارش های در انتظار ارسال</span>
                     <input type="radio" name="state" value='false'
-                        onChange={(e) => {
-                            this.setState({ isFiltered: true, isReceived: false })
-                            this.props.filterCustomTableAction(this.state)
+                        onChange={async(e) => {
+                           await this.setState({ isFiltered: true, isReceived: false })
+                           await console.log('false state is ',this.state)
+                          await  this.props.filterCustomTableAction(this.state)
                         }} />
                     <CustomTable />
                     <SendCustom />
-                <ReceivedCustomModal />
+                {/* <ReceivedCustomModal /> */}
 
                 </div>
             </div>

@@ -16,7 +16,7 @@ class ProductPage extends Component {
                 <div >
                     <div style={{ display: "flex", justifyContent:"space-between"}}>
                         <h1>مدیریت کالاها</h1>
-                        <Button onClick={()=>{this.props.modalFlagAction(true)}} >افزودن کالا</Button>
+                        <Button onClick={() => {this.props.modalFlagAction(true,true)}} >افزودن کالا</Button>
                     </div>
                     
                     <ProductTable />
@@ -38,7 +38,7 @@ const mapStateToProps = state => {
   const mapDispatchToProps = dispatch => {
     console.log(dispatch)
     return {
-        modalFlagAction: (flag) => { dispatch(modalFlagAction(flag)) }
+        modalFlagAction: (modalFlag,addModalFlag) => { dispatch(modalFlagAction(modalFlag,addModalFlag)) }
     }
   }
   
