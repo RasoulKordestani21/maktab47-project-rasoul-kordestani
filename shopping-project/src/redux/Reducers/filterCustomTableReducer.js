@@ -7,7 +7,6 @@ const initialState = {
 
 
 const filterCustomTableReducer = (state = initialState, action) => {
-   console.log(action)
     switch (action.type) {
         case FILTER_CUSTOM_TABLE: return {
             isFiltered: true,
