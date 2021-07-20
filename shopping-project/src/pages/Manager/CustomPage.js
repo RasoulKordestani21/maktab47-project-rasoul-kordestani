@@ -15,9 +15,6 @@ import { connect } from 'react-redux';
         isFiltered: false,
         isReceived: false
     }
-    componentDidUpdate() {
-      
-    }
     render() {
         return (
             <div >
@@ -40,7 +37,6 @@ import { connect } from 'react-redux';
                         }} />
                     <CustomTable />
                     <SendCustom />
-                {/* <ReceivedCustomModal /> */}
 
                 </div>
             </div>

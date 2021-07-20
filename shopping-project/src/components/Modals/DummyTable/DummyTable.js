@@ -17,28 +17,19 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, calories, fat) {
-  return { name, calories, fat };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0,),
-  createData('Ice cream sandwich', 237, 9.0,),
-  createData('Eclair', 262, 16.0),
-  createData('Cupcake', 305, 3.7),
-  createData('Gingerbread', 356, 16.0)
-];
 
  function DenseTable(props) {
   const classes = useStyles();
   const [choosenCustomer,setChoosenCustomer]=useState('')
-   useEffect(async() => {
+  
+   useEffect(async () => {
      console.log(props)
      let customers = await getCustomersItem()
      let customer = customers.data[props.indexOfCustomer];
      setChoosenCustomer(customer);
     console.log(customer.tableOfCustom)
-   },[props])
+   }, [props])
+   
    return (
     <div>
     <TableContainer component={Paper} style={{width:'100%',direction:"rtl"}}>
@@ -79,13 +70,5 @@ const mapStateToProps = state => {
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   console.log(dispatch)
-//   return {
-//     filterCustomTableAction: (flag) => { dispatch(filterCustomTableAction(flag)) },
-//     modalCustomFlagAction: (flag) => { dispatch(modalCustomFlagAction(flag)) },
-//     findIndexOfCustomerAction: (index) => { dispatch(findIndexOfCustomerAction(index)) }
 
-//   }
-// }
 export default connect(mapStateToProps)(DenseTable);
