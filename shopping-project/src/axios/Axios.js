@@ -74,7 +74,7 @@ export const patchModifiedItems = async (changes) => {
 export const editProductWithModal = async (id, changes) => {
   console.log(id, changes)
   changes = { image: changes.imgOfProduct, name: changes.nameOfProduct, baseGroup: changes.groupOfProduct, description: changes.descOfProduct }
-  
+
   for (let item in changes) {
     if (changes[item] == '') {
       delete changes[item]
@@ -120,24 +120,40 @@ export const deleteProduct = async (id) => {
 }
 
 export const postData = async (data) => {
-  // console.log(data)
-  var formdata = new FormData();
-  formdata.append("image", data.imgOfProduct.files[0], "/C:/Users/ASC/Desktop/54PV5Aa.jpg");
-  formdata.append("id", 33);
-  formdata.append("name", data.nameOfProduct);
-  formdata.append("baseGroup", data.groupOfProduct);
-  formdata.append("description", data.descOfProduct);
-  console.log(data.nameOfProduct, data.groupOfProduct, data.descOfProduct, data.imgOfProduct);
-  console.log(data.groupOfProduct.length)
-  console.log((`${baseURL}/${data.groupOfProduct}`))
-  var requestOptions = {
+  let response;
+  response = await axios.get(`${baseURL}/dairy`).then(res=>res.data)
+ await console.log(response.length)
+  
+      var formdata =await new FormData();
+    await  formdata.append("image", data.imgOfProduct.files[0], "/C:/Users/ASC/Desktop/54PV5Aa.jpg");
+    await formdata.append("id", response.length+1);
+    await formdata.append("name", data.nameOfProduct);
+    await formdata.append("baseGroup", data.groupOfProduct);
+    await formdata.append("description", data.descOfProduct);
+    await console.log(data.nameOfProduct, data.groupOfProduct, data.descOfProduct, data.imgOfProduct);
+    await console.log(data.groupOfProduct.length)
+    await console.log((`${baseURL}/${data.groupOfProduct}`))
+  
+   var requestOptions = await{
     method: 'POST',
     body: formdata,
     redirect: 'follow'
   };
-  console.log('salam')
-  fetch(`${baseURL}/${data.groupOfProduct}`, requestOptions)
+ await  console.log('salam')
+ await  fetch(`${baseURL}/${data.groupOfProduct}`, requestOptions)
     .then(response => response.text())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
+}
+
+export const ReceivedProduct = async (id) => {
+  let time = (new Date()).getTime();
+  let response;
+  console.log(id, time);
+  try {
+    response = await axios.patch(`${baseURL}/customers/${id}`, { dateOfReceive: time ,isReceived:true});
+  } catch (error) {
+    console.log(error);
+  }
+  return response
 }
