@@ -13,9 +13,9 @@ import FormControl from "@material-ui/core/FormControl";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { connect } from 'react-redux';
 import { modalFlagAction } from '../../../redux/Actions/modalFlagAction';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import DummyTable from "../../Modals/DummyTable/DummyTable";
-
+import { getCustomersItem ,ReceivedProduct} from '../../../axios/Axios';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -33,13 +33,19 @@ const useStyles = makeStyles((theme) => ({
 
 function SendCustom(props) {
     const classes = useStyles();
-    // getModalStyle is not a pure function, we roll the style only on the first render
-
+    const [choosenCustomer, setChoosenCustomer] = useState('');
     const [open, setOpen] = React.useState(true);
     useEffect(() => {
         setOpen(props.state.modalFlagReducer.customModalFlag)
     }, [props])
 
+    useEffect(async () => {
+        console.log(props)
+        let customers = await getCustomersItem()
+        let customer = customers.data[props.indexOfCustomer];
+        setChoosenCustomer(customer);
+       console.log(customer)
+      }, [props])
 
     const body = (
         <div style={{
@@ -60,34 +66,35 @@ function SendCustom(props) {
             </div>
             <div>
                 <div>
-                    <span>نام مشتری :</span><span>علی کاظمی</span>
+                    <span>نام مشتری :</span><span>{choosenCustomer && choosenCustomer.name}</span>
                 </div>
                 <div>
-                    <span>آدرس: </span><span>تهران- خ انقلاب-کوچه ی سوم- پلاک ۳</span>
+                    <span>آدرس: </span><span>{choosenCustomer && choosenCustomer.address}</span>
                 </div>
                 <div>
-                    <span>تلفن : </span><span>۰۹۱۳۸۸۲۱۹۹۸</span>
+                    <span>تلفن : </span><span>{choosenCustomer && choosenCustomer.telephoneNumber}</span>
                 </div>
                 <div>
-                    <span>زمان تحویل : </span><span>۱۴۰۰/۰۳/۱۲</span>
+                    <span>زمان تحویل : </span><span>{choosenCustomer && choosenCustomer.dateOfReceive}</span>
                 </div>
                 <div>
-                    <span>زمان سفارش :</span><span>۱۴۰۰/۰۳/۱۲</span>
+                    <span>زمان سفارش :</span><span>{choosenCustomer && choosenCustomer.dateOfCustome}</span>
                 </div>
             </div>
             <div style={{ backgroundColor: 'yellow', width: '100%', height: '40px' }}>
                 <DummyTable />
             </div>
-            {/* <div style={{ display: 'flex', marginTop: '220px' }} >
-                <span>تاریخ تحویل  :</span><span>۱۴۰۰/۰۳/۱۲</span>
-            </div> */}
-
-            {props.isReceived ?
+                
+            {console.log('salam',choosenCustomer &&choosenCustomer.isReceived)}
+            {!(choosenCustomer && choosenCustomer.isReceived) ?
                 <div style={{ display: 'flex', marginTop: '220px',justifyContent:'center' }} >
-                    <Button >تحویل داده شد</Button>
+                    <Button style={{ backgroundColor: 'purple' }}
+                        onClick={() => {ReceivedProduct(choosenCustomer.id) }}>
+                        تحویل داده شد
+                    </Button>
                 </div> :
                 <div style={{ display: 'flex', marginTop: '220px' }} >
-                    <span>تاریخ تحویل  :</span><span>۱۴۰۰/۰۳/۱۲</span>
+                    <span>تاریخ تحویل  :</span><span>{choosenCustomer && choosenCustomer.dateOfReceive}</span>
                 </div>}
 
         </div>
@@ -111,15 +118,15 @@ function SendCustom(props) {
 
 
 const mapStateToProps = state => {
-    console.log(state);
     return {
         isReceived: state.filterCustomTableReducer.isReceived,
         isFiltered: state.filterCustomTableReducer.isFiltered,
+        indexOfCustomer: state.modalFlagReducer.indexOfCustomer,
         state
     }
 }
+
 const mapDispatchToProps = dispatch => {
-    console.log(dispatch)
     return {
         modalFlagAction: (flag) => { dispatch(modalFlagAction(flag)) }
     }
