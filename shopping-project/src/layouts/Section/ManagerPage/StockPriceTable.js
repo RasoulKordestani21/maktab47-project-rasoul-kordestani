@@ -11,8 +11,11 @@ import logo from "../../../assets/images/MrShopLogo.jpg";
 import { getUser } from "../../../axios/Axios";
 import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
-import Box from '@material-ui/core/Box'
-
+import Box from '@material-ui/core/Box';
+import { connect } from 'react-redux';
+import { stockPriceChangesAction } from '../../../redux/Actions/StockPriceChangesAction'
+import { shouldUpdateTable } from "../../../redux/Actions/modalFlagAction";
+import { Button } from "@material-ui/core";
 
 // import { getUser } from '../axios/Axios'
 
@@ -42,60 +45,100 @@ const useStyles = makeStyles({
   },
 });
 let counter = 0;
-export default function StockPriceTable() {
+function StockPriceTable(props) {
   const classes = useStyles();
   const [state, setState] = useState([])
   const [beginItem, setBeginItem] = useState(1);
   const [page, setPage] = React.useState(1);
+
+
+  const [arrayOfChanges, setArrayOfChanges] = useState([])
+  const lastCHanges = (arr, obj, type) => {
+    let index = arr.findIndex(ele => ele.id == obj.id);
+    if (index > -1) {
+      arr[index][type] = obj[type];
+    } else {
+      arr.push(obj)
+    }
+    return arr
+  }
+
   const handleChange = (event, value) => {
     setPage(value);
   };
 
-    useEffect(() => {
-      console.log(beginItem)
-      getUser((page-1)*5+1, 5).then(
-        res => setState(res.data)
-      )
-    }, [page])
+  useEffect(async() => {
+    await getUser((page - 1) * 5 + 1, 5).then(
+      res => setState(res.data)
+    )
+  }, [page,props.shouldUpdate])
 
 
+  return (
+    <>
+  
+      <TableContainer style={{ width: "80%", margin: "auto", minHeight: "400px" }} component={Paper}>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell align="right"> کالا</StyledTableCell>
+              <StyledTableCell align="right">قیمت</StyledTableCell>
+              <StyledTableCell align="right">موجودی</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {state.map((data, index) => (
+              <StyledTableRow key={data.id}>
+                <StyledTableCell align="right"  >
+                  {data.name}
+                </StyledTableCell>
+                <StyledTableCell align="right" contenteditable="true"
+                  onInput={(e) => {
+                    state[index].price = e.target.innerHTML;
+                    console.log(e.target.innerHTML);
+                    setArrayOfChanges(lastCHanges(arrayOfChanges, { id: index + 1, price: e.target.innerHTML }, 'price'));
+                    props.stockPriceChangesAction(arrayOfChanges);
+                  }}>
+                  {data.price}
+                </StyledTableCell>
+                <StyledTableCell align="right" contenteditable="true"
+                  onInput={(e) => {
+                    state[index].numbers = e.target.innerHTML;
+                    setArrayOfChanges(lastCHanges(arrayOfChanges, { id: index + 1, numbers: e.target.innerHTML }, 'numbers'));
+                    props.stockPriceChangesAction(arrayOfChanges);
+                  }}>
+                  {data.numbers}
+                </StyledTableCell>
+                {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <div style={{ width: "50%", margin: "auto", padding: '20px' }}>
 
-    return (
-      <>
-        <TableContainer style={{width: "80%", margin: "auto" ,minHeight:"400px"}} component={Paper}>
-          <Table className={classes.table} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell align="right"> کالا</StyledTableCell>
-                <StyledTableCell align="right">قیمت</StyledTableCell>
-                <StyledTableCell align="right">موجودی</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <>
-                {state.map(fetchedData => console.log(fetchedData))}
-              </>
-              {state.map(data => (
-                <StyledTableRow  key={data.id}>
-                  <StyledTableCell align="right">{data.id}</StyledTableCell>
-                  <StyledTableCell  align="right">{data.name}</StyledTableCell>
-                  <StyledTableCell  align="right">{data.email}</StyledTableCell>
-                  {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div style={{ width: "50%", margin: "auto", padding: '20px' }}>
-          {/* <button onClick={(e) => { setBeginItem(1); console.log(beginItem) }}>page1</button>
-          <button onClick={(e) => { setBeginItem(6); console.log(beginItem) }}>page2</button>
-          <button onClick={(e) => { setBeginItem(11); console.log(beginItem) }}>page3</button>
-          <button onClick={(e) => { setBeginItem(16); console.log(beginItem) }}>page4</button> */}
-          <div style={{direction:"ltr"}}>
-            {/* <Typography >Page: {page}</Typography> */}
-            <Pagination count={4} color="primary" page={page} onChange={handleChange} />
-          </div>
+        <div style={{ direction: "ltr" }}>
+          {/* <Typography >Page: {page}</Typography> */}
+          <Pagination count={4} color="primary" page={page} onChange={handleChange} />
         </div>
-      </>
-    );
+      </div>
+    </>
+  );
+}
+
+const mapStateToProps = state => {
+  return {
+    arrayOfChanges: state.stockPriceChangesReducer.arrayOfChanges,
+    shouldUpdate: state.modalFlagReducer.shouldUpdateTable
   }
+}
+
+const mapDispatchToProps = dispatch => {
+
+  return {
+    stockPriceChangesAction: (arrayOfChanges) => { dispatch(stockPriceChangesAction(arrayOfChanges)) },
+    shouldUpdateTable: () => { dispatch(shouldUpdateTable()) }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(StockPriceTable);
+

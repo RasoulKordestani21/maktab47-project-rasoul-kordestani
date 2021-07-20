@@ -8,7 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import logo from "../../../assets/images/MrShopLogo.jpg";
-import { getUser } from "../../../axios/Axios";
+import { getCustomers } from "../../../axios/Axios";
 import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
 import Box from '@material-ui/core/Box'
@@ -16,8 +16,8 @@ import Box from '@material-ui/core/Box'
 import { connect } from 'react-redux';
 import { request } from "dom-helpers/cjs/animationFrame";
 
-import { modalCustomFlagAction } from '../../../redux/Actions/modalFlagAction'
-
+import { modalCustomFlagAction,findIndexOfCustomerAction } from '../../../redux/Actions/modalFlagAction'
+import {filterCustomTableAction} from "../../../redux/Actions/filterCustomTableAction";
 import { useHistory } from "react-router-dom";
 
 
@@ -58,26 +58,29 @@ function CustomTable(props) {
   // const [beginItem, setBeginItem] = useState(1);
   const [page, setPage] = React.useState(1);
   const handleChange = (event, value) => {
-    console.log(event, value)
+   
     setPage(value);
   };
 
+
+
   useEffect(async () => {
-    await getUser((page - 1) * 5 + 1, 5).then(
+    await getCustomers((page - 1) * 5 + 1, 5).then(
       res => { setState(res.data); setRequest(res.data) }
     )
-
+    // props.filterCustomTableAction({isFiltered:false,isReceived:false})
   },[useHistory().location])
 
   useEffect(async () => {
-    console.log('0')
-    await getUser((page - 1) * 5 + 1, 5).then(
+   
+    await getCustomers((page - 1) * 5 + 1, 5).then(
       res => { setState(res.data); setRequest(res.data) }
     )
+   
   }, [page])
 
   useEffect(async() => {
-    await getUser((page - 1) * 5 + 1, 5).then(
+    await getCustomers((page - 1) * 5 + 1, 5).then(
       res => { setState(res.data); setRequest(res.data) }
     )
    
@@ -103,12 +106,12 @@ function CustomTable(props) {
           <TableBody>
 
 
-            {state.map(data => (
+            {state.map((data,index) => (
               <StyledTableRow key={data.id}>
-                <StyledTableCell align="right">{data.id}</StyledTableCell>
                 <StyledTableCell align="right">{data.name}</StyledTableCell>
-                <StyledTableCell align="right">{(new Date(data.createdAt)).toLocaleDateString()}</StyledTableCell>
-                <StyledTableCell onClick={() => { console.log(props.modalCustomFlagAction(true)) }}
+                <StyledTableCell align="right">{data.wholePrice}</StyledTableCell>
+                <StyledTableCell align="right">{(new Date(data.dateOfCustome)).toLocaleDateString()}</StyledTableCell>
+                <StyledTableCell onClick={() => { props.findIndexOfCustomerAction(index);props.modalCustomFlagAction(true) }}
                   align="right">{'برسی سفارش'}</StyledTableCell>
                 {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
               </StyledTableRow>
@@ -127,18 +130,21 @@ function CustomTable(props) {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
+ 
   return {
     isFiltered: state.filterCustomTableReducer.isFiltered,
     isReceived: state.filterCustomTableReducer.isReceived,
-    state
+
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  console.log(dispatch)
+  
   return {
-    modalCustomFlagAction: (flag) => { dispatch(modalCustomFlagAction(flag)) }
+    filterCustomTableAction: (flag) => { dispatch(filterCustomTableAction(flag)) },
+    modalCustomFlagAction: (flag) => { dispatch(modalCustomFlagAction(flag)) },
+    findIndexOfCustomerAction: (index) => { dispatch(findIndexOfCustomerAction(index)) }
+
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CustomTable);

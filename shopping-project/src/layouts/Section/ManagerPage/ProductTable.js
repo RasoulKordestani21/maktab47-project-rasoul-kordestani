@@ -12,8 +12,9 @@ import { getUser } from "../../../axios/Axios";
 import Typography from '@material-ui/core/Typography';
 import Pagination from '@material-ui/lab/Pagination';
 import Box from '@material-ui/core/Box'
-
-
+import { connect } from 'react-redux';
+import { modalFlagAction, shouldUpdateTable } from '../../../redux/Actions/modalFlagAction'
+import { deleteProduct } from '../../../axios/Axios'
 // import { getUser } from '../axios/Axios'
 
 
@@ -41,22 +42,30 @@ const useStyles = makeStyles({
     minWidth: 700,
   },
 });
-let counter = 0;
-export default function ProductTable() {
+
+
+function ProductTable(props) {
   const classes = useStyles();
   const [state, setState] = useState([])
   const [beginItem, setBeginItem] = useState(1);
   const [page, setPage] = React.useState(1);
+  const [updateToggle, setUpdateToggle] = useState(false);
+
   const handleChange = (event, value) => {
     setPage(value);
   };
+
+  const handleUpdate = () => {
+    console.log('clicked')
+    setUpdateToggle(!updateToggle)
+  }
 
   useEffect(() => {
     console.log(beginItem)
     getUser((page - 1) * 5 + 1, 5).then(
       res => setState(res.data)
     )
-  }, [page])
+  }, [page, props.shouldUpdate])
 
 
 
@@ -69,21 +78,26 @@ export default function ProductTable() {
               <StyledTableCell align="right">تصویر</StyledTableCell>
               <StyledTableCell align="right">نام کالا</StyledTableCell>
               <StyledTableCell align="right">دسته بندی</StyledTableCell>
-              <StyledTableCell align="right">ویرایش /حذف</StyledTableCell>
+              <StyledTableCell align="right">ویرایش/حذف</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <>
               {state.map(fetchedData => console.log(fetchedData))}
             </>
-            {state.map(data => (
+            {state.map((data, index) => (
               <StyledTableRow key={data.id}>
                 <StyledTableCell component="th" scope="row" align="right">
                   <img src={data.image} width="40px" style={{ borderRadius: "50%" }} />
                 </StyledTableCell>
                 <StyledTableCell align="right">{data.id}</StyledTableCell>
                 <StyledTableCell align="right">{data.name}</StyledTableCell>
-                <StyledTableCell align="right">{'ویرایش /حذف'}</StyledTableCell>
+                <StyledTableCell align="right">
+                  <a style={{ backgroundColor: 'yellow' }}
+                    onClick={() => { props.modalFlagAction(true, false, data.id); handleUpdate() }}>ویرایش
+                  </a>/
+                  <a style={{ backgroundColor: 'red' }}
+                    onClick={() => { deleteProduct(data.id);props.shouldUpdateTable() }}>حذف</a></StyledTableCell>
                 {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
               </StyledTableRow>
             ))}
@@ -91,15 +105,29 @@ export default function ProductTable() {
         </Table>
       </TableContainer>
       <div style={{ width: "50%", margin: "auto", padding: '20px' }}>
-        {/* <button onClick={(e) => { setBeginItem(1); console.log(beginItem) }}>page1</button>
-          <button onClick={(e) => { setBeginItem(6); console.log(beginItem) }}>page2</button>
-          <button onClick={(e) => { setBeginItem(11); console.log(beginItem) }}>page3</button>
-          <button onClick={(e) => { setBeginItem(16); console.log(beginItem) }}>page4</button> */}
+
         <div style={{ direction: "ltr" }}>
-          {/* <Typography >Page: {page}</Typography> */}
           <Pagination count={4} color="primary" page={page} onChange={handleChange} />
         </div>
       </div>
     </>
   );
 }
+
+const mapStateToProps = state => {
+  console.log(state)
+  return {
+    productModalFlag: state.productModalFlag,
+    customModalFlag: state.customModalFlag,
+    shouldUpdate: state.modalFlagReducer.shouldUpdateTable
+  }
+}
+const mapDispatchToProps = dispatch => {
+  console.log(dispatch)
+  return {
+    modalFlagAction: (modalFlag, addModalFlag, index) => { dispatch(modalFlagAction(modalFlag, addModalFlag, index)) },
+    shouldUpdateTable: () => { dispatch(shouldUpdateTable()) }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductTable)
