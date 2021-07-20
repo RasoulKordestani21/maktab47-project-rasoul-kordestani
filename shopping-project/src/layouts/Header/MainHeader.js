@@ -6,25 +6,28 @@ import Grid from "@material-ui/core/Grid";
 import "../../assets/styles/style.css"
 import { useHistory } from 'react-router-dom';
 
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
-export function Header() {
+export function MainHeader() {
   let history = useHistory();
   function firstPage() {
-    history.push('/')
+    history.push('/LoginManagerPage')
+  }
+  function PurchaseBasket() {
+    history.push('/PurchaseBasket')
   }
 
   return (
-    <header>
+    <header >
       <Grid  container color="white" alignItems="center" direction="row" justify="space-between">
         <LogoArea />
-        <ManagerNavItem />
+        
         <div>
-          <Button type="button" onClick={firstPage}>بازگشت به صفحه اصلی</Button>
+          <Button type="button" onClick={firstPage}>مدیریت</Button>
+          <Button type="button" onClick={PurchaseBasket}> <ShoppingCartIcon />سبد خرید</Button>
         </div>
       </Grid>
     </header>
   );
 
 }
-
-export default Header;

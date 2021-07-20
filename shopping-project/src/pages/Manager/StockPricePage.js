@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Button, StepConnector } from "@material-ui/core";
-import StockPriceTable from "../../layouts/Section/ManagerPage/StockPriceTable";
 import ManagerHeader from "../../layouts/Header/ManagerHeader/ManagerHeader";
 import { connect } from 'react-redux';
 import { patchModifiedItems, testGet } from '../../axios/Axios';
 import { shouldUpdateTable } from '../../redux/Actions/modalFlagAction';
 import { stockPriceChangesAction } from '../../redux/Actions/StockPriceChangesAction';
+import StockPriceTable from "../../layouts/Section/ManagerSection/StockPriceTable";
 
-class StockPricePage extends Component {
+
+ class StockPricePage extends Component {
 
     state = {
         data: '',
@@ -17,7 +18,6 @@ class StockPricePage extends Component {
     componentDidUpdate() {
         console.log(this.props.arrayOfChanges)
     }
-
 
     render() {
         return (

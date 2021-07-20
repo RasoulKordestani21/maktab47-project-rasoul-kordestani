@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import { Button } from "@material-ui/core";
-import CustomTable from "../../layouts/Section/ManagerPage/CustomTable";
+import CustomTable from "../../layouts/Section/ManagerSection/CustomTable";
 import ManagerHeader from '../../layouts/Header/ManagerHeader/ManagerHeader'
 import { filterCustomTableAction } from "../../redux/Actions/filterCustomTableAction";
 import SendCustom from '../../components/Modals/customModals/SentCustomModal';
 import ReceivedCustomModal from '../../components/Modals/customModals/ReceivedCustomModal'
 import { connect } from 'react-redux';
- class CustomPage extends Component {
-    constructor(props) {
-        super(props)
-    }
+
+ 
+
+
+
+class CustomPage extends Component {
 
     state = {
         isFiltered: false,

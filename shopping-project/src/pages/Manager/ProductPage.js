@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ProductTable from "../../layouts/Section/ManagerPage/ProductTable";
 import ManagerHeader from '../../layouts/Header/ManagerHeader/ManagerHeader'
+import ProductTable from "../../layouts/Section/ManagerSection/ProductTable";
 import { Button } from "@material-ui/core";
 import ProductModal from '../../components/Modals/ProductModal';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ class ProductPage extends Component {
             <div>
                 <ManagerHeader  />
                 <ProductModal />
+               
                 <div >
                     <div style={{ display: "flex", justifyContent:"space-between"}}>
                         <h1>مدیریت کالاها</h1>

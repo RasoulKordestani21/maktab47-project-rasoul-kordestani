@@ -23,12 +23,25 @@ export const getAdminData = async (a = 3, b = 5) => {
     const one = 1;
     response = await axios.get(`${baseURL}/admins`);
     // console.log(response);
+  }catch (error) {
+      // console.error(error);
+    }
+    return response
+  }
 
+export const getDairy = async (start=3,limit=5) => {
+  let response;
+  try {
+    const one = 1;
+    response = await axios.get(`http://localhost:3000/dairy?_start=${start}&_limit=${limit}`);
+    // console.log(response);
   } catch (error) {
     // console.error(error);
   }
   return response
 }
+
+
 
 export const getCustomers = async (a = 3, b = 5) => {
   let response;
@@ -36,7 +49,19 @@ export const getCustomers = async (a = 3, b = 5) => {
     const one = 1;
     response = await axios.get(`${baseURL}/customers`);
     // console.log(response);
+  } catch (error) {
+    // console.error(error);
+  }
+  return response
+}
 
+export const getHealthWashing = async (a=3,b=5) => {
+  let response;
+  try {
+    const one = 1;
+    response = await axios.get(`http://localhost:3000/health-Washing?_start=${a}&_limit=${b}`);
+    // console.log(response);
+    
   } catch (error) {
     // console.error(error);
   }
@@ -50,7 +75,18 @@ export const getCustomersItem = async (a = 3, b = 5) => {
     const one = 1;
     response = await axios.get(`${baseURL}/customers`);
     response = await response.then(res => res.data);
+  } catch (error) {
+    // console.error(error);
+  }
+  return response
+}
 
+export const getProductDetail = async (category,id) => {
+  let response;
+  try {
+    response = await axios.get(`http://localhost:3000/${category}?id=${id}`);
+    // console.log(response);
+    
   } catch (error) {
     // console.error(error);
   }
@@ -74,7 +110,6 @@ export const patchModifiedItems = async (changes) => {
 export const editProductWithModal = async (id, changes) => {
   console.log(id, changes)
   changes = { image: changes.imgOfProduct, name: changes.nameOfProduct, baseGroup: changes.groupOfProduct, description: changes.descOfProduct }
-
   for (let item in changes) {
     if (changes[item] == '') {
       delete changes[item]
@@ -91,6 +126,27 @@ export const editProductWithModal = async (id, changes) => {
   }
   return response
 }
+
+
+  export const postUserData = async (userData) => {
+  
+  await axios.post('http://localhost:3000/userSpecifics', {
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    address:userData.address,
+    phoneNumber:userData.phoneNumber,
+    dateOfSend:userData.dateOfSend
+  })
+  .then(function (response) {
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
+
+ 
 
 export const testGet = async (id) => {
 

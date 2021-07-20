@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import LoginManagerSection from '../../layouts/Section/ManagerPage/LoginManagersSection'
+import LoginManagerSection from '../../layouts/Section/ManagerSection/LoginManagersSection'
 import ManagerHeader from '../../layouts/Header/ManagerHeader/ManagerHeader'
 export class LoginManagerPage extends Component {
     render() {
