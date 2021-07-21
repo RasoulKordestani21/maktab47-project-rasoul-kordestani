@@ -6,17 +6,18 @@ const initialState = {
 
 
 const choosenProductReducer = (state = initialState, action) => {
+    console.log(action)
     switch (action.type) {
         case ADD_PRODUCT: {
             let isInList = false;
             state.choosenProducts.forEach(ele => {
                 if (ele.name == action.choosenProduct.name) {
                     isInList = true;
-                    ele.numOfPurch++;
+                    // ele.numOfPurch++;
                 }
             })
             if (!isInList) {
-                action.choosenProduct.numOfPurch = 1;
+                // action.choosenProduct.numOfPurch = 1;
                 state.choosenProducts.push(action.choosenProduct);
             }
             console.log(state.choosenProducts)

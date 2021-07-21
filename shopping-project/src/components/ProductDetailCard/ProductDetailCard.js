@@ -8,6 +8,9 @@ import { connect } from 'react-redux';
 import { addProduct,deleteProduct } from '../../redux/Actions/choosenProductAction';
 // import Button from '@material-ui/core'
 class ProductDetailCard extends Component {
+    state = {
+        numberOfProduct: 0,
+    }
     async componentDidMount() {
         
     }
@@ -36,8 +39,14 @@ class ProductDetailCard extends Component {
                         {this.props.productDetail.price} تومان
                     </Grid>
                     <Grid item container>
-                        <TextField id="standard-number" type="number" style={{ width: '70px' }} InputLabelProps={{ shrink: true }} />
-                        <Button  onClick={()=>this.props.addProduct(this.props.productDetail)} style={{ marginRight: "30px", backgroundColor: "green" }}>افزودن کالا به سبد خرید
+                        <TextField
+                            id="standard-number" type="number"
+                            style={{ width: '70px' }} InputLabelProps={{ shrink: true }}
+                            onChange={(e) => { this.props.productDetail.numOfPurch=e.target.value}}
+                        />
+                        <Button onClick={() => this.props.addProduct(this.props.productDetail)}
+                            style={{ marginRight: "30px", backgroundColor: "green" }}>
+                            افزودن کالا به سبد خرید
                             <AddCircleIcon />
                         </Button>
                         <Button onClick={()=>this.props.deleteProduct(this.props.productDetail)}>حذف کالا</Button>

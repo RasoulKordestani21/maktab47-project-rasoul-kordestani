@@ -82,7 +82,6 @@ function PurchaseBasketSection(props) {
                                 <StyledTableCell align="right">{ele.numOfPurch}</StyledTableCell>
                                 <StyledTableCell align="right" style={{ color: "blue", textDecoration: "underline" }} onClick={() => props.deleteProduct(ele)}> حذف</StyledTableCell>
                             </StyledTableRow>
-
                         )}
 
 
@@ -93,7 +92,7 @@ function PurchaseBasketSection(props) {
                 <div>{
                     calcWholePrice(props.choosenProduct.choosenProducts.map(ele => [ele.price, ele.numOfPurch]))
                 }</div>
-                <Button onClick={()=>goToFinalizePurchase()}>نهایی کردن خرید</Button>
+                <Button onClick={() => goToFinalizePurchase()}>نهایی کردن خرید</Button>
             </div>
             <button onClick={() => { }}>click</button>
         </div>
@@ -113,4 +112,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(PurchaseBasketSection)
+export default connect(mapStateToProps, mapDispatchToProps)(PurchaseBasketSection)
