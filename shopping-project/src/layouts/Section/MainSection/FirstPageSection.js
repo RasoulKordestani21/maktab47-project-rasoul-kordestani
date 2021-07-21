@@ -5,6 +5,8 @@ import { getDairy, getHealthWashing } from '../../../axios/Axios';
 import { withRouter } from "react-router-dom"
 
 import { getProductDetailAction } from '../../../redux/Actions/getProductDetailAction';
+import { sideBarFlagAction } from '../../../redux/Actions/SideBarFlagAction';
+
 import { connect } from 'react-redux';
 
  class FirstPageSection extends Component {
@@ -40,7 +42,9 @@ import { connect } from 'react-redux';
             <div>
                 <Grid container alignItems="center" spacing={12} style={{ background: "pink" }}>
                     <Grid 
-                        item xs={12}>کالاهای گروه لبنیات</Grid>
+                        item xs={12}
+                    onClick={()=>console.log(this.props.sideBarFlagAction())}
+                    >کالاهای گروه لبنیات</Grid>
                     {this.state.dairyState.map(product =>
                         <Grid product={product} onClick={(e) => { console.log(this.props); this.props.getProductDetailAction(product.id, product.group);this.goToDetail() }} item xs={6} sm={4} md={3} ><ProductCard product={product} /></Grid>
                     )}
@@ -77,7 +81,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     // console.log(dispatch(getProductDetailAction))
     return {
-      getProductDetailAction: (id,group) => { dispatch(getProductDetailAction(id,group)) }
+        getProductDetailAction: (id, group) => { dispatch(getProductDetailAction(id, group)) },
+        sideBarFlagAction: () => { dispatch(sideBarFlagAction()) }
     }
   }
 

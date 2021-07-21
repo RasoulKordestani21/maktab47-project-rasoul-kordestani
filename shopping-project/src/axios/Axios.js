@@ -14,6 +14,19 @@ export const getUser = async (a=3,b=5) => {
   return response
 }
 
+export const getSideBarData = async () => {
+  let response;
+  try {
+    const one = 1;
+    response = await axios.get(`http://localhost:3000/productAndProductGroup`);
+    // console.log(response);
+    
+  } catch (error) {
+    // console.error(error);
+  }
+  return response
+}
+
 export const getDairy = async (start=3,limit=5) => {
   let response;
   try {
