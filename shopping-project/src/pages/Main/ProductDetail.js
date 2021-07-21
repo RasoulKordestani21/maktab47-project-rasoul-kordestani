@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { MainHeader } from '../../layouts/terminal'
 import ProductDetailSection from '../../layouts/Section/MainSection/ProductDetailSection'
-export default class ProductDetail extends Component {
+import { connect } from 'react-redux';
+class ProductDetail extends Component {
+ 
     render() {
         return (
             <div>
@@ -11,3 +13,12 @@ export default class ProductDetail extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    console.log(state.choosenProductReducer.choosenProducts.length)
+    return {
+      choosenProducts: state.choosenProductReducer.choosenProducts
+    }
+  }
+  
+  export default connect(mapStateToProps)(ProductDetail)
