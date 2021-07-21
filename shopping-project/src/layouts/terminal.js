@@ -1,3 +1,6 @@
+import MainHeader from './Header/MainHeader';
+import SideBar from './Section/MainSection/SideBar/SideBar';
+export {SideBar}
+export  {MainHeader};
 export { ManagerHeader } from "./Header/ManagerHeader";
-export { MainHeader } from './Header/MainHeader';
-export { Section } from './Section/Section'
+export { Section } from './Section/Section';
