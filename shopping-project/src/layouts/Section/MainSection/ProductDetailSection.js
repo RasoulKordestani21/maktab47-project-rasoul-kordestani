@@ -9,20 +9,22 @@ class ProductDetailSection extends Component {
         id: '',
         detailState: ''
     }
-    async componentDidMount() { 
-        console.log(this.props.id,this.props.group)
-        let detail = await getProductDetail(this.props.group, this.props.id).then(res => res.data);
-        console.log(detail)
-        if ((typeof detail) == 'string') {
-            let cachedData =await  JSON.parse(localStorage.getItem('detail'));
-            detail = await getProductDetail(cachedData.group, cachedData.id).then(res => res.data);
-        }
-         else {
-            await localStorage.setItem('detail',JSON.stringify(detail[0]))
-        }
-        this.setState({ detailState: detail[0] })
+     componentDidMount() { 
+         getProductDetail(this.props.group, this.props.id).then(res => {
+             this.setState({ detailState: res.data });
+             localStorage.setItem('detail', JSON.stringify(this.state.detailState))
+         });
+        // if ((typeof detail) == 'string') {
+        //     let cachedData =  JSON.parse(localStorage.getItem('detail'));
+        //      getProductDetail(cachedData.group, cachedData.id).then(res => this.setState({ detailState: res.data }));
+        // }
+        //  else {
+        //      localStorage.setItem('detail',JSON.stringify(this.state.detailState))
+        // }
+        
     }
     render() {
+        console.log()
         return (
             <div>
                 <ProductDetailCard productDetail={this.state.detailState} />
