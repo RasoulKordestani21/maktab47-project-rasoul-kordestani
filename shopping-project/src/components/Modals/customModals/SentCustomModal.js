@@ -13,9 +13,9 @@ import FormControl from "@material-ui/core/FormControl";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { connect } from 'react-redux';
 import { modalFlagAction } from '../../../redux/Actions/modalFlagAction';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import DummyTable from "../../Modals/DummyTable/DummyTable";
-import { getCustomersItem ,ReceivedProduct} from '../../../axios/Axios';
+import { getCustomersItem, ReceivedProduct } from '../../../axios/Axios';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
         border: "2px solid #000",
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
-        direction: "rtl",
         height: "500px"
     }
 }));
@@ -35,17 +34,16 @@ function SendCustom(props) {
     const classes = useStyles();
     const [choosenCustomer, setChoosenCustomer] = useState('');
     const [open, setOpen] = React.useState(true);
+    const [updateFlag, setUpdateFlag] = useState(false);
     useEffect(() => {
         setOpen(props.state.modalFlagReducer.customModalFlag)
     }, [props])
 
-    useEffect(async () => {
-        console.log(props)
-        let customers = await getCustomersItem()
-        let customer = customers.data[props.indexOfCustomer];
-        setChoosenCustomer(customer);
-       console.log(customer)
-      }, [props])
+    useEffect(() => {
+
+        getCustomersItem(props.indexOfCustomer).then(res => setChoosenCustomer(res.data))
+
+    }, [props, updateFlag])
 
     const body = (
         <div style={{
@@ -66,36 +64,37 @@ function SendCustom(props) {
             </div>
             <div>
                 <div>
-                    <span>نام مشتری :</span><span>{choosenCustomer && choosenCustomer.name}</span>
+                    <span>نام مشتری :</span><span>{choosenCustomer && (choosenCustomer.firstName + ' ' + choosenCustomer.lastName)}</span>
                 </div>
                 <div>
                     <span>آدرس: </span><span>{choosenCustomer && choosenCustomer.address}</span>
                 </div>
                 <div>
-                    <span>تلفن : </span><span>{choosenCustomer && choosenCustomer.telephoneNumber}</span>
+                    <span>تلفن : </span><span>{choosenCustomer && choosenCustomer.phoneNumber}</span>
                 </div>
                 <div>
-                    <span>زمان تحویل : </span><span>{choosenCustomer && choosenCustomer.dateOfReceive}</span>
+                    <span>زمان تحویل : </span><span>{choosenCustomer && (new Date(Number(choosenCustomer.dateOfOrder))).toLocaleDateString()}</span>
                 </div>
                 <div>
-                    <span>زمان سفارش :</span><span>{choosenCustomer && choosenCustomer.dateOfCustome}</span>
+                    <span>زمان سفارش :</span><span>{choosenCustomer && (new Date(Number(choosenCustomer.dateOfSend))).toLocaleDateString()}</span>
                 </div>
             </div>
             <div style={{ backgroundColor: 'yellow', width: '100%', height: '40px' }}>
                 <DummyTable />
             </div>
-                
-            {console.log('salam',choosenCustomer &&choosenCustomer.isReceived)}
+            {console.log(choosenCustomer.isReceived)}
+            {/* {console.log('hasan kojai pa?',choosenCustomer &&choosenCustomer.isReceived)} */}
             {!(choosenCustomer && choosenCustomer.isReceived) ?
-                <div style={{ display: 'flex', marginTop: '220px',justifyContent:'center' }} >
+                <div style={{ display: 'flex', marginTop: '220px', justifyContent: 'center' }} >
                     <Button style={{ backgroundColor: 'purple' }}
-                        onClick={() => {ReceivedProduct(choosenCustomer.id) }}>
+                        onClick={() => { console.log(ReceivedProduct(choosenCustomer.id).then(res => setUpdateFlag(!updateFlag))) }}>
                         تحویل داده شد
                     </Button>
                 </div> :
                 <div style={{ display: 'flex', marginTop: '220px' }} >
-                    <span>تاریخ تحویل  :</span><span>{choosenCustomer && choosenCustomer.dateOfReceive}</span>
-                </div>}
+                    <span>تاریخ تحویل  :</span><span>{choosenCustomer && (new Date(Number(choosenCustomer.dateOfSend))).toLocaleDateString()}</span>
+                </div>
+            }
 
         </div>
 
@@ -103,7 +102,6 @@ function SendCustom(props) {
 
     return (
         <div>
-
             <Modal
                 open={open}
                 onClose={() => { props.modalFlagAction(false) }}
