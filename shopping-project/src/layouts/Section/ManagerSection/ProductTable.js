@@ -41,8 +41,12 @@ const useStyles = makeStyles({
   table: {
     minWidth: 700,
   },
+  ul: {
+    "& .MuiPaginationItem-root": {
+      color: "#fff"
+    }
+  }
 });
-
 
 function ProductTable(props) {
   const classes = useStyles();
@@ -50,6 +54,7 @@ function ProductTable(props) {
   const [beginItem, setBeginItem] = useState(1);
   const [page, setPage] = React.useState(1);
   const [updateToggle, setUpdateToggle] = useState(false);
+  const [numOfPages, setNumOfPages] = useState(0);
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -62,8 +67,12 @@ function ProductTable(props) {
 
   useEffect(() => {
     console.log(beginItem)
-    getUser((page - 1) * 5 + 1, 5).then(
-      res => setState(res.data)
+    
+    getUser().then(
+      res => {setNumOfPages(Math.floor(res.data.length/5)+1)}
+    )
+    getUser(5*(page-1), 5).then(
+      res=>{setState(res.data)}
     )
   }, [page, props.shouldUpdate])
 
@@ -82,22 +91,25 @@ function ProductTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            <>
-              {state.map(fetchedData => console.log(fetchedData))}
-            </>
+           
             {state.map((data, index) => (
               <StyledTableRow key={data.id}>
                 <StyledTableCell component="th" scope="row" align="right">
                   <img src={data.image} width="40px" style={{ borderRadius: "50%" }} />
                 </StyledTableCell>
-                <StyledTableCell align="right">{data.id}</StyledTableCell>
                 <StyledTableCell align="right">{data.name}</StyledTableCell>
+                <StyledTableCell align="right">{data.groupToPersian}</StyledTableCell>
                 <StyledTableCell align="right">
                   <a style={{ backgroundColor: 'yellow' }}
                     onClick={() => { props.modalFlagAction(true, false, data.id); handleUpdate() }}>ویرایش
                   </a>/
                   <a style={{ backgroundColor: 'red' }}
-                    onClick={() => { deleteProduct(data.id);props.shouldUpdateTable() }}>حذف</a></StyledTableCell>
+                    onClick={() => {
+                      if (window.confirm(`آیا می خواهید کالای ${data.name} را حذف کنید ؟`)) {
+                        deleteProduct(data.id);
+                        props.shouldUpdateTable()
+                    }
+                    }}>حذف</a></StyledTableCell>
                 {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
               </StyledTableRow>
             ))}
@@ -107,7 +119,7 @@ function ProductTable(props) {
       <div style={{ width: "50%", margin: "auto", padding: '20px' }}>
 
         <div style={{ direction: "ltr" }}>
-          <Pagination count={4} color="primary" page={page} onChange={handleChange} />
+          <Pagination classes={{ ul: classes.ul }} count={numOfPages} color="primary" page={page} onChange={handleChange} />
         </div>
       </div>
     </>
