@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-export function ManagerNavItem() {
+import { managerNav } from './ManagersNavItemStyle';
+
+export function ManagerNavItem(props) {
   let history = useHistory();
   function productPage() {
     history.push('/ProductTable')
@@ -14,11 +16,11 @@ export function ManagerNavItem() {
   }
 
   return (
-    <div style={{ display: "flex", justifyContent: 'space-between', backgroundColor: 'rgb(255,200,3)' }}>
+    <div style={{ display: "flex", justifyContent: 'space-between' }}>
       <div>
-        <Button type="button" onClick={productPage}> مدیریت کالاها</Button>
-        <Button type="button" onClick={StockPricePage}> مدیریت موجودی ها </Button>
-        <Button type="button" onClick={customPage}> مدیریت سفارش ها</Button>
+        <Button style={managerNav} type="button" onClick={productPage}> مدیریت کالاها</Button>
+        <Button  style={managerNav} type="button" onClick={StockPricePage}> مدیریت موجودی ها </Button>
+        <Button  style={managerNav} type="button" onClick={customPage}> مدیریت سفارش ها</Button>
       </div>
      
       </div>
