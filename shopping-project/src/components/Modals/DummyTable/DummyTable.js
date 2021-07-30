@@ -23,16 +23,14 @@ const useStyles = makeStyles({
   const [choosenCustomer,setChoosenCustomer]=useState('')
   
    useEffect(async () => {
-     console.log(props)
-     let customers = await getCustomersItem()
-     let customer = customers.data[props.indexOfCustomer];
-     setChoosenCustomer(customer);
-    console.log(customer.tableOfCustom)
+    getCustomersItem(props.indexOfCustomer).then(res=>setChoosenCustomer(res.data))
+        
    }, [props])
    
    return (
-    <div>
-    <TableContainer component={Paper} style={{width:'100%',direction:"rtl"}}>
+     <div>
+       {console.log('salam agha vahid',choosenCustomer)}
+    <TableContainer component={Paper} style={{width:'100%'}}>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -42,14 +40,14 @@ const useStyles = makeStyles({
           </TableRow>
         </TableHead>
         <TableBody>
-          {choosenCustomer && choosenCustomer.tableOfCustom.map((product) => (
+          {choosenCustomer && JSON.parse(choosenCustomer.products).map((product) => (
             <TableRow key={product.id}>
               {console.log(product)}
               <TableCell component="th" scope="row">
-                {product.productName}
+                {product.name}
               </TableCell>
               <TableCell align="right">{product.price}</TableCell>
-              <TableCell align="right">{product.numbers}</TableCell>
+              <TableCell align="right">{product.numOfOrd}</TableCell>
             </TableRow>
           ))}
         </TableBody>
