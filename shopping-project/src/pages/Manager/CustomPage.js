@@ -6,8 +6,8 @@ import { filterCustomTableAction } from "../../redux/Actions/filterCustomTableAc
 import SendCustom from '../../components/Modals/customModals/SentCustomModal';
 import ReceivedCustomModal from '../../components/Modals/customModals/ReceivedCustomModal'
 import { connect } from 'react-redux';
+import styles from '../../assets/style/style.module.css';
 
- 
 
 
 
@@ -21,22 +21,25 @@ class CustomPage extends Component {
         return (
             <div >
                 <ManagerHeader />
-                <div>
-                    <h1>مدیریت سفارش ها</h1>
-                    <span>سفارش های تحویل داده شده</span>
-                    <input type="radio" name="state" value='true'
-                        onChange={async(e) => {
-                            await this.setState({ isFiltered: true, isReceived: true })
-                            await console.log('true state is',this.state)
-                            await this.props.filterCustomTableAction(this.state)
-                        }} />
-                    <span>سفارش های در انتظار ارسال</span>
-                    <input type="radio" name="state" value='false'
-                        onChange={async(e) => {
-                           await this.setState({ isFiltered: true, isReceived: false })
-                           await console.log('false state is ',this.state)
-                          await  this.props.filterCustomTableAction(this.state)
-                        }} />
+                <div className={styles['manager-section-custom']}>
+                    <h1 className={styles['manager-section-custom-header']}>مدیریت سفارش ها</h1>
+                    <div className={styles['manager-section-custom-under-header']}>
+                        <span>سفارش های تحویل داده شده</span>
+                        <input type="radio" name="state" value='true'
+                            onChange={async (e) => {
+                                await this.setState({ isFiltered: true, isReceived: true })
+                                await console.log('true state is', this.state)
+                                await this.props.filterCustomTableAction(this.state)
+                            }} />
+                        <span>سفارش های در انتظار ارسال</span>
+                        <input type="radio" name="state" value='false'
+                            onChange={async (e) => {
+                                await this.setState({ isFiltered: true, isReceived: false })
+                                await console.log('false state is ', this.state)
+                                await this.props.filterCustomTableAction(this.state)
+                            }} />
+
+                    </div>
                     <CustomTable />
                     <SendCustom />
 
@@ -51,18 +54,18 @@ class CustomPage extends Component {
 
 
 const mapStateToProps = state => {
-  console.log(state)
-  return {
-    isFiltered: state.filterCustomTableReducer.isFiltered,
-    isReceived: state.filterCustomTableReducer.isReceived,
-    state
-  }
+    console.log(state)
+    return {
+        isFiltered: state.filterCustomTableReducer.isFiltered,
+        isReceived: state.filterCustomTableReducer.isReceived,
+        state
+    }
 }
 
 const mapDispatchToProps = dispatch => {
-  console.log(dispatch)
-  return {
-      filterCustomTableAction: (flag) => { dispatch(filterCustomTableAction(flag)) }
-  }
+    console.log(dispatch)
+    return {
+        filterCustomTableAction: (flag) => { dispatch(filterCustomTableAction(flag)) }
+    }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(CustomPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CustomPage);

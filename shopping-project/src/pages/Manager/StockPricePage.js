@@ -6,7 +6,7 @@ import { patchModifiedItems, testGet } from '../../axios/Axios';
 import { shouldUpdateTable } from '../../redux/Actions/modalFlagAction';
 import { stockPriceChangesAction } from '../../redux/Actions/StockPriceChangesAction';
 import StockPriceTable from "../../layouts/Section/ManagerSection/StockPriceTable";
-
+import styles from '../../assets/style/style.module.css';
 
  class StockPricePage extends Component {
 
@@ -23,17 +23,10 @@ import StockPriceTable from "../../layouts/Section/ManagerSection/StockPriceTabl
         return (
             <div>
                 <ManagerHeader />
-                <div>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <h1>مدیریت موجودی ها وقیمت ها</h1>
-                        <div>
-                            {/* <button onClick={async (e) => {
-                                let resolve = await testGet().then(res => res.data);
-                                this.setState({ data: resolve })
-                                console.log(this.state.data)
-                              }}> test Click</button> */}
-                            <img src={this.state && this.state.data.image} width="40px" style={{ borderRadius: "50%" }} />
-                        </div>
+                <div className={styles['manager-section-stock-price']}>
+                    <div className={styles['manager-section-stock-price-header-button']}>
+                        <h1 className={styles['manager-section-stock-price-header-button-header']}>مدیریت موجودی ها وقیمت ها</h1>
+                     
                         {this.props.arrayOfChanges.length != 0 ?
                             <Button
                                 style={{ backgroundColor: 'aqua' }}
@@ -47,7 +40,7 @@ import StockPriceTable from "../../layouts/Section/ManagerSection/StockPriceTabl
                         }
                         {this.props.arrayOfChanges.length != 0 ?
                             <Button style={{ backgroundColor: 'green' }}
-                                onClick={(e) => { this.props.arrayOfChanges.forEach(ele => patchModifiedItems(ele)); this.props.shouldUpdateTable() }}>
+                                onClick={(e) => { this.props.arrayOfChanges.forEach(ele => patchModifiedItems(ele)); this.props.shouldUpdateTable(); this.props.stockPriceChangesAction([]); }}>
                                 ذخیره
                             </Button> :
                             <Button style={{ backgroundColor: 'lightgreen' }}>

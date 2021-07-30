@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { deleteProduct } from '../../../redux/Actions/choosenProductAction';
 
 import { useHistory } from "react-router-dom";
-
+import styles from '../../../assets/style/style.module.css'
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -51,6 +51,7 @@ function calcWholePrice(priceNumbers) {
 
 
 function PurchaseBasketSection(props) {
+
     console.log(props.choosenProduct.choosenProducts);
     let history = useHistory();
 
@@ -61,9 +62,9 @@ function PurchaseBasketSection(props) {
     const classes = useStyles();
 
     return (
-        <div>
-            <div>سبد خرید</div>
-            <TableContainer style={{ width: "80%", margin: "auto", minHeight: "400px" }} component={Paper}>
+        <div className={styles['main-section-purchase-basket']}>
+            <div className={styles['main-section-purchase-basket-header']}>سبد خرید</div>
+            <TableContainer className={styles['main-section-purchase-basket-table']} component={Paper}>
                 <Table className={classes.table} aria-label="customized table">
                     <TableHead>
                         <TableRow>
@@ -74,12 +75,12 @@ function PurchaseBasketSection(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-
+                        {console.log(props.choosenProduct.choosenProducts[0])}
                         {props.choosenProduct.choosenProducts.map(ele =>
                             <StyledTableRow  >
                                 <StyledTableCell align="right">{ele.name}</StyledTableCell>
                                 <StyledTableCell align="right">{ele.price}</StyledTableCell>
-                                <StyledTableCell align="right">{ele.numOfPurch}</StyledTableCell>
+                                <StyledTableCell align="right">{ele.numOfOrd}</StyledTableCell>
                                 <StyledTableCell align="right" style={{ color: "blue", textDecoration: "underline" }} onClick={() => props.deleteProduct(ele)}> حذف</StyledTableCell>
                             </StyledTableRow>
                         )}
@@ -88,13 +89,19 @@ function PurchaseBasketSection(props) {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <div>
-                <div>{
-                    calcWholePrice(props.choosenProduct.choosenProducts.map(ele => [ele.price, ele.numOfPurch]))
-                }</div>
-                <Button onClick={() => goToFinalizePurchase()}>نهایی کردن خرید</Button>
+            <div className={styles['main-section-purchase-basket-bottom-part']}>
+                <div>
+                    <h5 className={styles['main-section-purchase-basket-bottom-part-whole-price']}>قیمت کل  :{" "}
+                        {
+                            calcWholePrice(props.choosenProduct.choosenProducts.map(ele => [ele.price, ele.numOfOrd]))
+                        } تومان
+                    </h5>
+                </div>
+                <div className={styles['main-section-purchase-basket-bottom-part-button-parent']}>
+                    <Button className={styles['main-section-purchase-basket-bottom-part-button']} onClick={() => goToFinalizePurchase()}>نهایی کردن خرید</Button>
+                </div>
             </div>
-            <button onClick={() => { }}>click</button>
+
         </div>
     )
 

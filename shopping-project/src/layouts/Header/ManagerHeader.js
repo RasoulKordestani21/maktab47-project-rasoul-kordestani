@@ -3,8 +3,9 @@ import { LogoArea } from "../../components/terminal";
 import { ManagerNavItem } from "../../components/ManagersNavItem/ManagerNavItem";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import "../../assets/styles/style.css"
+// import "../../assets/styles/style.css"
 import { useHistory } from 'react-router-dom';
+// import { buttonStyle } from './HeaderStyle/HeaderStyle';
 
 
 export function ManagerHeader() {
