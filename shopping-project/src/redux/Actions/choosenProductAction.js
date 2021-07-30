@@ -1,11 +1,12 @@
 import { ADD_PRODUCT,DELETE_PRODUCT } from "../Types"
 
 
-export const addProduct = (choosenProduct) => {
-    console.log(choosenProduct)
+export const addProduct = (choosenProduct,numOfOrd) => {
+    console.log('fkdsljflsjflsd',choosenProduct,numOfOrd)
     return {
         type: ADD_PRODUCT,
-        choosenProduct
+        choosenProduct,
+        numOfOrd
     }
 }
 
