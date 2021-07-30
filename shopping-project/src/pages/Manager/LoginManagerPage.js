@@ -5,7 +5,7 @@ export class LoginManagerPage extends Component {
     render() {
         return (
             <div>
-                <ManagerHeader />
+                {/* <ManagerHeader /> */}
                 <LoginManagerSection />
             </div>
         )
