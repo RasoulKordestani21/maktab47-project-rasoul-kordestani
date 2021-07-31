@@ -1,0 +1,269 @@
+
+$custom-orange:rgb(255, 200, 3);
+$custom-light-purple:rgb(172, 142, 255);
+$custom-dark-purple:rgb(101, 72, 182);
+$custom-blue:rgb(60, 147, 228);
+html,body {
+    margin: 0px;
+    padding: 0px;
+    /* font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif !important; */
+    /* color:white  */
+    font-family: "IRANSANS";
+  }
+  header {
+    background-color: $custom-dark-purple;
+    color:white 
+  }
+
+  .main-header{
+      
+      &-button{
+        background: linear-gradient(45deg, $custom-orange 10%, rgb(76, 29 ,193) 90%);
+        border-radius: 3px !important;
+        border: 0;
+        color: white !important;
+        height: 40px;
+        border:2px solid pink !important;
+        padding: 0px 30px !important;
+        margin:5px !important
+      }
+  }
+
+  .main-section{
+    background-color: $custom-light-purple ;
+    color:white;
+    // height: 100vh;
+    &-base-group{
+        cursor: pointer;
+         background-color: $custom-orange;
+        //  color:$custom-orange;
+          display: inline-block;
+          margin-right: 5px; 
+          font-size:20px
+    }
+
+    &-product-card{
+        border: 2px solid pink;
+        background: linear-gradient(45deg, $custom-orange 10%, rgb(76, 29 ,193) 90%);
+         display: flex ;
+         margin: 10px;
+         &-text{
+            margin: 4px 20px;
+             display: flex;
+              flex-direction: column;
+               justify-content:space-around
+         }
+    }
+
+    &-product-detail-card{
+        color:white;
+         background: rgb(172, 142, 255);
+         height:89vh;
+         &-image{
+             padding: 10px;
+         }
+         &-text{ 
+            height: 45vh ; 
+            background: linear-gradient(315deg, $custom-orange 30%, rgb(76, 29 ,193)  );
+            margin: 10px;
+            padding: 10px 30px;
+            border-radius: 10px;
+            &-name{
+                margin: 10px 0px 25px 0px !important;
+                font-size: 28px
+            };
+            &-price{
+                font-size: 25px ;
+                margin: 80px 0px 0px !important;
+            };
+            &-inputs{
+                margin: 20px 0px 0px !important;
+                &-number{
+                    width: 70px;
+                }
+            };
+            &-button{
+                 background-color: rgb(0, 172, 0) !important;
+                  margin-right: 80px   !important;
+                  color:white !important
+            }
+         }
+    }
+
+    &-purchase-basket{
+        color:white;
+        height: 89vh;
+        background-color: $custom-light-purple ; 
+        &-header{
+            padding:10px 0px 0px 0px;
+            margin:0px 20px 20px ;
+            font-size: 28px;
+        }
+        &-table{
+            width: 80% !important;
+             margin: auto; 
+             min-height: 400px
+        }
+        &-bottom-part{
+            margin: 20px;
+            &-whole-price{
+                font-size: 18px;
+            };
+            &-button-parent{
+                width: 200px;
+                //  background-color: green;
+                  margin: auto
+            };
+            &-button{
+                width: 200px;
+                 background-color: yellow !important;
+                 padding:15px 40px
+            }
+        }
+    }
+
+    &-finalize-purchase{
+        color:white;
+        background-color: $custom-light-purple;
+        height: 100vh;
+        &-form{
+            border-radius: 20px;
+            margin:0px auto 50px auto;
+            width:70% !important;
+            background-color:white !important;
+            &-line-element{
+                margin:30px !important;
+                &-items{
+                    margin:0px auto 
+                }
+            };
+            &-button-parent{
+                width:176px;
+                background-color: pink !important;
+                margin:0px auto;
+                &-child{
+                    background-color: $custom-orange !important;
+                    padding:8px 40px !important
+                }
+            }
+        }
+    }
+
+    &-success-pay{
+        height: 89vh !important;
+         display: flex;
+          justify-content: center;
+           background-color: $custom-light-purple;
+            align-items: center;
+             height: 400px
+    };
+    &-cancel-pay{
+        height: 89vh !important;
+        display: flex;
+         justify-content: center;
+          background-color: $custom-light-purple;
+           align-items: center;
+            height: 400px
+    }
+  }
+
+  .manager-section{
+      &-login{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 0px;
+          height: 100vh ;
+          background: linear-gradient(45deg, $custom-orange 10%, rgb(76, 29 ,193) 90%);
+          color:white;
+      };
+      &-products{
+        background: linear-gradient(225deg, $custom-orange 10%, rgb(76, 29 ,193) 90%);
+      height: 100vh;
+      &-header-button{
+          margin: 20px;
+          display: flex;
+          align-items: center;
+          justify-content:space-between;
+         &-header{
+             font-size: 28px;
+            color:white;
+        };
+        &-button{
+            color:white !important;
+            background-color: $custom-blue !important;
+            height: 55px;
+        }
+      }
+    };
+     &-stock-price{
+        background: linear-gradient(225deg, $custom-orange 10%, rgb(76, 29 ,193) 90%);
+        height: 89.3vh;
+        &-header-button{
+            // background-color: yellow;
+            margin: 0 20px;
+            padding: 20px 0px;
+            display: flex;
+            align-items: center;
+            justify-content:space-between;
+            &-header{
+                font-size: 28px;
+               color:white;
+           };
+        }
+     };
+
+    &-custom{
+        background: linear-gradient(225deg, $custom-orange 10%, rgb(76, 29 ,193) 90%);
+        min-height: 89.3vh;
+        margin-top: -19px;
+        &-header{
+            font-size: 28px;
+            padding: 40px 20px 0px ;
+            color:white;
+        }
+        &-under-header{
+            // background-color: yellowgreen;
+            padding: 5px 20px 10px ;
+            color:white;
+        }
+   
+    }
+  }
+
+
+
+  .side-bar{
+      background-color: $custom-light-purple !important;
+      color:white;
+      width: 23vw;
+      padding: 0 20px;
+
+      &-header{
+          padding: 2px;
+        display: flex;
+        background-color: $custom-orange;
+        &-arrow{ 
+            border-radius: 50%;
+            margin: 0 20px;
+            font-size:40px !important;
+            color: $custom-orange;
+            background-color: $custom-dark-purple;
+        }
+    }
+    &-list{
+    }
+  }
+
+  .logo-area{
+      display:flex;
+      align-items: center;
+      &-image{
+          margin:10px  
+      }
+      &-text{
+        font-size: 25px;
+      }
+  }
+
+  
