@@ -9,17 +9,18 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import logo from "../../../assets/images/MrShopLogo.jpg";
 import { getUser } from "../../../axios/Axios";
-import Typography from '@material-ui/core/Typography';
-import Pagination from '@material-ui/lab/Pagination';
-import Box from '@material-ui/core/Box'
-import { connect } from 'react-redux';
-import { modalFlagAction, shouldUpdateTable } from '../../../redux/Actions/modalFlagAction'
-import { deleteProduct } from '../../../axios/Axios'
+import Typography from "@material-ui/core/Typography";
+import Pagination from "@material-ui/lab/Pagination";
+import Box from "@material-ui/core/Box";
+import { connect } from "react-redux";
+import {
+  modalFlagAction,
+  shouldUpdateTable,
+} from "../../../redux/Actions/modalFlagAction";
+import { deleteProduct } from "../../../axios/Axios";
 // import { getUser } from '../axios/Axios'
 
-
-
-const StyledTableCell = withStyles(theme => ({
+const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.white,
     color: theme.palette.common.black,
@@ -29,7 +30,7 @@ const StyledTableCell = withStyles(theme => ({
   },
 }))(TableCell);
 
-const StyledTableRow = withStyles(theme => ({
+const StyledTableRow = withStyles((theme) => ({
   root: {
     "&:nth-of-type(odd)": {
       backgroundColor: theme.palette.action.hover,
@@ -43,14 +44,14 @@ const useStyles = makeStyles({
   },
   ul: {
     "& .MuiPaginationItem-root": {
-      color: "#fff"
-    }
-  }
+      color: "#fff",
+    },
+  },
 });
 
 function ProductTable(props) {
   const classes = useStyles();
-  const [state, setState] = useState([])
+  const [state, setState] = useState([]);
   const [beginItem, setBeginItem] = useState(1);
   const [page, setPage] = React.useState(1);
   const [updateToggle, setUpdateToggle] = useState(false);
@@ -61,26 +62,27 @@ function ProductTable(props) {
   };
 
   const handleUpdate = () => {
-    console.log('clicked')
-    setUpdateToggle(!updateToggle)
-  }
+    console.log("clicked");
+    setUpdateToggle(!updateToggle);
+  };
 
   useEffect(() => {
-    console.log(beginItem)
-    
-    getUser().then(
-      res => {setNumOfPages(Math.floor(res.data.length/5)+1)}
-    )
-    getUser(5*(page-1), 5).then(
-      res=>{setState(res.data)}
-    )
-  }, [page, props.shouldUpdate])
+    console.log(beginItem);
 
-
+    getUser().then((res) => {
+      setNumOfPages(Math.floor(res.data.length / 5) + 1);
+    });
+    getUser(5 * (page - 1), 5).then((res) => {
+      setState(res.data);
+    });
+  }, [page, props.shouldUpdate]);
 
   return (
     <>
-      <TableContainer style={{ width: "80%", margin: "auto", minHeight: "400px" }} component={Paper}>
+      <TableContainer
+        style={{ width: "80%", margin: "auto", minHeight: "400px" }}
+        component={Paper}
+      >
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -91,55 +93,85 @@ function ProductTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-           
             {state.map((data, index) => (
               <StyledTableRow key={data.id}>
                 <StyledTableCell component="th" scope="row" align="right">
-                  <img src={data.image} width="40px" style={{ borderRadius: "50%" }} />
+                  <img
+                    src={data.image}
+                    width="40px"
+                    style={{ borderRadius: "50%" }}
+                  />
                 </StyledTableCell>
                 <StyledTableCell align="right">{data.name}</StyledTableCell>
-                <StyledTableCell align="right">{data.groupToPersian}</StyledTableCell>
                 <StyledTableCell align="right">
-                  <a style={{ backgroundColor: 'yellow' }}
-                    onClick={() => { props.modalFlagAction(true, false, data.id); handleUpdate() }}>ویرایش
-                  </a>/
-                  <a style={{ backgroundColor: 'red' }}
+                  {data.groupToPersian}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <a
+                    style={{ backgroundColor: "yellow" }}
                     onClick={() => {
-                      if (window.confirm(`آیا می خواهید کالای ${data.name} را حذف کنید ؟`)) {
+                      props.modalFlagAction(true, false, data.id);
+                      handleUpdate();
+                    }}
+                  >
+                    ویرایش
+                  </a>
+                  /
+                  <a
+                    style={{ backgroundColor: "red" }}
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          `آیا می خواهید کالای ${data.name} را حذف کنید ؟`
+                        )
+                      ) {
                         deleteProduct(data.id);
-                        props.shouldUpdateTable()
-                    }
-                    }}>حذف</a></StyledTableCell>
+                        props.shouldUpdateTable();
+                      }
+                    }}
+                  >
+                    حذف
+                  </a>
+                </StyledTableCell>
                 {/* <StyledTableCell style={{ border: '3px solid black' }} align="right">{''}</StyledTableCell> */}
               </StyledTableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <div style={{ width: "50%", margin: "auto", padding: '20px' }}>
-
+      <div style={{ width: "50%", margin: "auto", padding: "20px" }}>
         <div style={{ direction: "ltr" }}>
-          <Pagination classes={{ ul: classes.ul }} count={numOfPages} color="primary" page={page} onChange={handleChange} />
+          <Pagination
+            classes={{ ul: classes.ul }}
+            count={numOfPages}
+            color="primary"
+            page={page}
+            onChange={handleChange}
+          />
         </div>
       </div>
     </>
   );
 }
 
-const mapStateToProps = state => {
-  console.log(state)
+const mapStateToProps = (state) => {
+  console.log(state);
   return {
     productModalFlag: state.productModalFlag,
     customModalFlag: state.customModalFlag,
-    shouldUpdate: state.modalFlagReducer.shouldUpdateTable
-  }
-}
-const mapDispatchToProps = dispatch => {
-  console.log(dispatch)
+    shouldUpdate: state.modalFlagReducer.shouldUpdateTable,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  console.log(dispatch);
   return {
-    modalFlagAction: (modalFlag, addModalFlag, index) => { dispatch(modalFlagAction(modalFlag, addModalFlag, index)) },
-    shouldUpdateTable: () => { dispatch(shouldUpdateTable()) }
-  }
-}
+    modalFlagAction: (modalFlag, addModalFlag, index) => {
+      dispatch(modalFlagAction(modalFlag, addModalFlag, index));
+    },
+    shouldUpdateTable: () => {
+      dispatch(shouldUpdateTable());
+    },
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductTable)
+export default connect(mapStateToProps, mapDispatchToProps)(ProductTable);

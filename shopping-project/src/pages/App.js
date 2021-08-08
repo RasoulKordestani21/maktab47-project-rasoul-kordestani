@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Header, Section } from "../layouts/terminal";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import CustomPage from '../pages/Manager/CustomPage';
-import ProductPage from '../pages/Manager/ProductPage';
-import { StockPricePage } from '../pages/Manager/StockPricePage';
+import CustomPage from "../pages/Manager/CustomPage";
+import ProductPage from "../pages/Manager/ProductPage";
+import { StockPricePage } from "../pages/Manager/StockPricePage";
 import store from "../redux/store";
 import { Provider } from "react-redux";
 import Router from "../routers/Router";
@@ -15,27 +15,26 @@ import { ThemeProvider } from "@material-ui/styles";
 const theme = createMuiTheme({
   typography: {
     fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
+      "-apple-system",
+      "BlinkMacSystemFont",
       '"Segoe UI"',
-      'Roboto',
+      "Roboto",
       '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
+      "Arial",
+      "sans-serif",
       '"Apple Color Emoji"',
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
-    ].join(','),
+    ].join(","),
   },
 });
 
 export class App extends Component {
   render() {
     return (
-
-      <Provider store={store} >
+      <Provider store={store}>
         <ThemeProvider theme={theme} injectFirst>
-          <Router className='dummy' />
+          <Router className="dummy" />
         </ThemeProvider>
       </Provider>
     );
